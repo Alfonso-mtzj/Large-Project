@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-app.use(cors());
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(cors())
 const User = require('./models/User');
