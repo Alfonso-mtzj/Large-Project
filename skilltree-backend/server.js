@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 app.post('/api/register', async (request, response) => {
-    /*const { firstName, lastName, username, email, password } = request.body;
+    const { firstName, lastName, username, email, password } = request.body;
     try {
         const userExists = await User.findOne({email: email});
         if(userExists){
@@ -53,8 +53,7 @@ app.post('/api/register', async (request, response) => {
         console.error(e);
         response.status(500).json({error: e.toString()});
         
-    }*/
-    app.get('/test', (req, res) => res.send("API is reachable!"));
+    }
 })
 app.post('/api/login', async (request, response) => {
     const { email, password } = request.body;
