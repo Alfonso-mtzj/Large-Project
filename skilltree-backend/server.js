@@ -54,7 +54,7 @@ app.post('/api/register', async (request, response) => {
         response.status(500).json({error: e.toString()});
     }
 })
-app.post('/api/Login', async (request, response) => {
+app.post('/api/login', async (request, response) => {
     const { email, password } = request.body;
     try {
         const user = await User.findOne({ email: email });
