@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 app.post('/api/register', async (request, response) => {
     const { firstName, lastName, username, email, password } = request.body;
     try {
-        const userExists = await User.findOne({email: email});
+        /*const userExists = await User.findOne({email: email});
         if(userExists){
             return response.status(400).json({error: "Existing User"});
         }
@@ -48,7 +48,8 @@ app.post('/api/register', async (request, response) => {
                    <a href="http://${request.headers.host}/api/verify/${tokenVerify}">Verify Email</a>`
         }
         await transporter.sendMail(mailOptions);
-        response.status(200).json({error: "", message: "Registered successfully! Please check your email to verify your account."});
+        response.status(200).json({error: "", message: "Registered successfully! Please check your email to verify your account."});*/
+        app.get('/test', (req, res) => res.send("API is reachable!"));
     }catch (e) {
         console.error(e);
         response.status(500).json({error: e.toString()});
