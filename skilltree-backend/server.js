@@ -7,7 +7,22 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' }));
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://lifexpskilltree.xyz',
+    'https://www.lifexpskilltree.xyz',
+];
+app.use(cors({
+    origin: (origin, callback) => {
+        // allow requests with no origin (e.g. curl, mobile apps)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
 const User = require('./models/User');
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
@@ -40,12 +55,13 @@ app.post('/api/register', async (request, response) => {
             isVerified: false
         })
         await UserDetails.save()
+        const appBaseUrl = process.env.APP_BASE_URL || 'https://lifexpskilltree.xyz';
         const mailOptions = {
             from: `"Skill Tree" <${process.env.SMTP_USER}>`,
             to: email,
             subject: 'Please Verify Your Skill Tree Account',
             html: `Hello ${firstName},<br>Please verify your account by clicking: 
-                   <a href="http://${request.headers.host}/api/verify/${tokenVerify}">Verify Email</a>`
+                   <a href="${appBaseUrl}/api/verify/${tokenVerify}">Verify Email</a>`
         }
         await transporter.sendMail(mailOptions);
         response.status(200).json({error: "", message: "Registered successfully! Please check your email to verify your account."});
@@ -91,11 +107,12 @@ app.get('/api/verify/:token', async (request, response) => {
         user.isVerified = true;
         user.verificationToken = undefined;
         await user.save();
-        response.redirect('http://localhost:5173/login?verified=true');
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        response.redirect(`${frontendUrl}/login?verified=true`);
     }catch (e){
         console.error('Verify error:', e);
         response.status(500).send("Internal Server Error");
     }
 })
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
