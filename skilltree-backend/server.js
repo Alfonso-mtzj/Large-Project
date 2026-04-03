@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-app.use(cors({ origin: '...' }))
+app.use(cors());
 const app = express();
 app.use(express.json());
 app.use(cors())
