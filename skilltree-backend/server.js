@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors())
 const User = require('./models/User');
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
