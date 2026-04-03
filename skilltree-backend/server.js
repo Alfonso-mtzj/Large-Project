@@ -1,17 +1,9 @@
-require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+**const router = express.Router();**
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(cors())
-const User = require('./models/User');
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.log(err));
+**const User = require('../models/User');**
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -21,7 +13,7 @@ const transporter = nodemailer.createTransport({
         pass: process.env.SMTP_PASS,
     },
 });
-app.post('/api/register', async (request, response) => {
+**router.post('/api/register', async (request, response) => {
     const { firstName, lastName, username, email, password } = request.body;
     try {
         const userExists = await User.findOne({email: email});
@@ -55,7 +47,7 @@ app.post('/api/register', async (request, response) => {
         
     }
 })
-app.post('/api/login', async (request, response) => {
+**router.post('/api/login', async (request, response) => {
     const { email, password } = request.body;
     try {
         const user = await User.findOne({ email: email });
@@ -81,7 +73,7 @@ app.post('/api/login', async (request, response) => {
         response.status(500).json({ error: e.toString() });
     }
 })
-app.get('/api/verify/:token', async (request, response) => {
+**router.get('/api/verify/:token', async (request, response) => {
     try {
         console.log('Token received:', request.params.token);
         const user = await User.findOne({ verificationToken: request.params.token });
@@ -98,5 +90,4 @@ app.get('/api/verify/:token', async (request, response) => {
         response.status(500).send("Internal Server Error");
     }
 })
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+**module.exports = router;**
