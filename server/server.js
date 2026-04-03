@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/api/register', async (request, response) => {
-    const { firstName, lastName, email, password } = request.body;
+    const { firstName, lastName, username, email, password } = request.body;
 
     try {
         const userExists = await User.findOne({email: email});
@@ -42,6 +42,7 @@ app.post('/api/register', async (request, response) => {
         const UserDetails = new User({
             firstName: firstName,
             lastName: lastName,
+            username: username,
             email: email,
             password: hashPassword,
             verificationToken: tokenVerify,
