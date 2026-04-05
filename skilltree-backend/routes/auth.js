@@ -35,7 +35,7 @@ router.post('/register', async (request, response) => {
             email,
             password: hashPassword,
             verificationToken: tokenVerify,
-            isVerified: false
+            isVerified: true //CHANGE TO FALSE WHEN EMAIL IS ENABLEDDDDDDD!!!!!!!!!!!!!!!
         });
 
         await newUser.save();
