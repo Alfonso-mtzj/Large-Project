@@ -7,16 +7,16 @@ export default function Verify() {
   const [message, setMessage] = useState("Verifying...");
 
   useEffect(() => {
-  verifyEmail(token)
-    .then(() => {
-      setMessage("Email verified! You can now login.");
+    verifyEmail(token)
+      .then(() => {
+        setMessage("Email verified! You can now login.");
 
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-    })
-    .catch(() => setMessage("Verification failed."));
-}, [token]);
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+      })
+      .catch(() => setMessage("Verification failed."));
+  }, [token]);
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
