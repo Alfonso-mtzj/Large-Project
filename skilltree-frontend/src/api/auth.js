@@ -13,6 +13,10 @@ const API = axios.create({
 
 export const registerUser = (formData) => API.post('/api/register', formData);
 export const loginUser = (formData) => API.post('/api/login', formData);
-export const verifyEmail = (token) => API.get(`/api/verify/${token}`);
+export const verifyEmail = (token) => API.get(`/api/verify/${token}`, {
+  headers: {
+    'Cache-Control': 'no-cache'
+  }
+});
 
 export default API;
