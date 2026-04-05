@@ -42,7 +42,7 @@ router.post('/register', async (request, response) => {
         });
 
         // 🔥 Send email via SendGrid
-      const verificationLink = `https://lifexpskilltree.xyz/api/verify/${tokenVerify}`;
+        const verificationLink = `${process.env.CLIENT_URL}/verify/${tokenVerify}`;
 
         await sgMail.send({
             to: email,
