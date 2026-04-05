@@ -71,7 +71,9 @@ router.post('/register', async (request, response) => {
 // ================= VERIFY =================
 router.get('/verify/:token', async (req, res) => {
     try {
+        console.log("TOKEN FROM URL:", req.params.token);
         const user = await User.findOne({ verificationToken: req.params.token });
+        console.log("TOKEN FROM URL:", req.params.token);
 
         if (!user) {
             return res.status(400).send("Invalid or expired token");
@@ -83,6 +85,7 @@ router.get('/verify/:token', async (req, res) => {
 
         res.send("Email verified successfully! You can now log in.");
     } catch (err) {
+        console.error(err);
         res.status(500).send("Server error");
     }
 });
