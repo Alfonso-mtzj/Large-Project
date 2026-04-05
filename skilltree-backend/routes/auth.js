@@ -58,6 +58,9 @@ router.post('/register', async (request, response) => {
                 <a href="${verificationLink}">${verificationLink}</a>
             `
         }).catch(err => console.error("Email error:", err));
+    } catch (e) {
+        console.error(e);
+        response.status(500).json({ error: e.toString() });
     }
 });
 
