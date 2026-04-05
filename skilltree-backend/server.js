@@ -8,7 +8,10 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(cors({
-  origin: "http://134.209.72.180:5173",
+  origin: [
+    "http://lifexpskilltree.xyz",
+    "http://www.lifexpskilltree.xyz"
+  ],
   credentials: true
 }));
 
