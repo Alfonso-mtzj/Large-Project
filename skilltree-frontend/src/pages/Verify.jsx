@@ -8,7 +8,13 @@ export default function Verify() {
 
   useEffect(() => {
   verifyEmail(token)
-    .then(() => setMessage("Email verified! You can now login."))
+    .then(() => {
+      setMessage("Email verified! You can now login.");
+
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    })
     .catch(() => setMessage("Verification failed."));
 }, [token]);
 
