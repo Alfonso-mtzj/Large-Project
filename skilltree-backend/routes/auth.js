@@ -2,24 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const User = require('../models/User');
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, //important cuz its gotta be false for 587
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
-    family: 4 //forces IPv4
-});
+// 🔥 Setup SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// ✅ REMOVE /api HERE
+// ================= REGISTER =================
 router.post('/register', async (request, response) => {
     const { firstName, lastName, username, email, password } = request.body;
 
@@ -47,37 +36,39 @@ router.post('/register', async (request, response) => {
 
         await newUser.save();
 
+        // ✅ Send success immediately
         response.status(200).json({
             message: "Registered successfully! Please check your email."
         });
 
-        // send email AFTER response
+        // 🔥 Send email via SendGrid
         const verificationLink = `${process.env.CLIENT_URL}/verify/${tokenVerify}`;
 
-        await transporter.sendMail({
-            from: `"SkillTree" <${process.env.SMTP_USER}>`,
+        await sgMail.send({
             to: email,
+            from: process.env.SMTP_USER, // MUST be verified in SendGrid
             subject: "Verify your email",
             html: `
-                <div style="font-family: Arial; text-align: center;">
+                <div style="text-align:center; font-family: Arial;">
                     <h2>Welcome to SkillTree 🌱</h2>
-                    <p>Please verify your email to activate your account.</p>
+                    <p>Please verify your email:</p>
                     <a href="${verificationLink}" 
-                       style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+                       style="padding:10px 20px; background:#4CAF50; color:white; text-decoration:none; border-radius:5px;">
                        Verify Email
                     </a>
-                    <p style="margin-top: 20px;">Or copy this link:</p>
+                    <p style="margin-top:20px;">Or copy this link:</p>
                     <p>${verificationLink}</p>
                 </div>
             `
-        }).catch(err => console.error("Email error:", err));
+        }).catch(err => console.error("SendGrid error:", err));
+
     } catch (e) {
         console.error(e);
         response.status(500).json({ error: e.toString() });
     }
 });
 
-//email verification
+// ================= VERIFY =================
 router.get('/verify/:token', async (req, res) => {
     try {
         const user = await User.findOne({ verificationToken: req.params.token });
@@ -90,12 +81,13 @@ router.get('/verify/:token', async (req, res) => {
         user.verificationToken = null;
         await user.save();
 
-        res.json("Email verified successfully! You can now log in.");
+        res.send("Email verified successfully! You can now log in.");
     } catch (err) {
         res.status(500).send("Server error");
     }
 });
 
+// ================= LOGIN =================
 router.post('/login', async (request, response) => {
     const { email, password } = request.body;
 
