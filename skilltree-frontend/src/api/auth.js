@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://lifexpskilltree.xyz:5000';
+const baseURL = 'http://134.209.72.180:5000';
 
 const API = axios.create({
   baseURL,
