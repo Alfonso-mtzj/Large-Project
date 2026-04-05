@@ -43,9 +43,14 @@ router.post('/register', async (request, response) => {
 
         await newUser.save();
 
+        response.status(200).json({
+            message: "Registered successfully! Please check your email."
+        });
+
+        // send email AFTER response
         const verificationLink = `${process.env.CLIENT_URL}/verify/${tokenVerify}`;
 
-        await transporter.sendMail({
+        transporter.sendMail({
             from: process.env.SMTP_USER,
             to: email,
             subject: "Verify your email",
@@ -54,15 +59,7 @@ router.post('/register', async (request, response) => {
                 <p>Click the link below to verify your account:</p>
                 <a href="${verificationLink}">${verificationLink}</a>
             `
-        });
-
-        response.status(200).json({
-            message: "Registered successfully"
-        });
-
-    } catch (e) {
-        console.error(e);
-        response.status(500).json({ error: e.toString() });
+        }).catch(err => console.error("Email error:", err));
     }
 });
 
