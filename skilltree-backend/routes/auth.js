@@ -79,7 +79,7 @@ router.get('/verify/:token', async (req, res) => {
         user.verificationToken = null;
         await user.save();
 
-        res.send("Email verified successfully! You can now log in.");
+        res.json("Email verified successfully! You can now log in.");
     } catch (err) {
         res.status(500).send("Server error");
     }
