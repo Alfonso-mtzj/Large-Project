@@ -20,9 +20,12 @@ router.post('/register', async (request, response) => {
     const { firstName, lastName, username, email, password } = request.body;
 
     try {
-        const userExists = await User.findOne({ email });
-        if (userExists) {
-            return response.status(400).json({ error: "Existing User" });
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
+        });
+
+        if (existingUser) {
+            return response.status(400).json({ error: "User already exists" });
         }
 
         const hashPassword = await bcrypt.hash(password, 10);
