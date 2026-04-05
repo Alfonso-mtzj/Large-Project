@@ -38,13 +38,23 @@ router.post('/register', async (request, response) => {
             email,
             password: hashPassword,
             verificationToken: tokenVerify,
-            isVerified: true //CHANGE TO FALSE WHEN EMAIL IS ENABLEDDDDDDD!!!!!!!!!!!!!!!
+            isVerified: false
         });
 
         await newUser.save();
 
-        // TEMP disable email
-        // await transporter.sendMail(...);
+        const verificationLink = `${process.env.CLIENT_URL}/verify/${tokenVerify}`;
+
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: email,
+            subject: "Verify your email",
+            html: `
+                <h2>Email Verification</h2>
+                <p>Click the link below to verify your account:</p>
+                <a href="${verificationLink}">${verificationLink}</a>
+            `
+        });
 
         response.status(200).json({
             message: "Registered successfully"
@@ -53,6 +63,25 @@ router.post('/register', async (request, response) => {
     } catch (e) {
         console.error(e);
         response.status(500).json({ error: e.toString() });
+    }
+});
+
+//email verification
+router.get('/verify/:token', async (req, res) => {
+    try {
+        const user = await User.findOne({ verificationToken: req.params.token });
+
+        if (!user) {
+            return res.status(400).send("Invalid or expired token");
+        }
+
+        user.isVerified = true;
+        user.verificationToken = null;
+        await user.save();
+
+        res.send("Email verified successfully! You can now log in.");
+    } catch (err) {
+        res.status(500).send("Server error");
     }
 });
 
