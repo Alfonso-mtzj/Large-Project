@@ -3,6 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
 
+import AuthLayout from '../components/AuthLayout';
+import loginFrame from '../assets/auth/login-frame.png';
+
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -16,7 +19,7 @@ export default function Login() {
     setError('');
     try {
       const { data } = await loginUser(form);
-      login(data, null); // their API doesn't return a token yet, just user info
+      login(data, null); // API doesn't return a token yet, just user info
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
@@ -24,15 +27,36 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input name="email" placeholder="Email" type="email" onChange={handleChange} required />
-        <input name="password" placeholder="Password" type="password" onChange={handleChange} required />
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <Link to="/register">Register</Link></p>
-    </div>
+    <>
+      {error && <div className="authErrorToast">{error}</div>}
+
+      <AuthLayout frameSrc={loginFrame}>
+        <form onSubmit={handleSubmit} style={{ display: 'contents' }}>
+          <input
+            name="email"
+            placeholder="Email"
+            type="email"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="password"
+            placeholder="Password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
+
+          {/* real submit button, invisible (click area matches PNG button) */}
+          <button type="submit" aria-label="Login">Login</button>
+        </form>
+
+        <div style={{ textAlign: 'center', marginTop: 8 }}>
+          <Link to="/register" style={{ color: '#eaffef', fontWeight: 800 }}>
+            Register
+          </Link>
+        </div>
+      </AuthLayout>
+    </>
   );
 }
