@@ -1,0 +1,71 @@
+.authBg{
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+.authFrameWrap{
+  position: relative;
+  width: min(520px, 92vw);
+  aspect-ratio: 1 / 1.25; /* adjust if your PNG is taller/shorter */
+}
+
+.authFrame{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* this is where the REAL form lives */
+.authOverlay{
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 32%;
+  bottom: 18%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Inputs should be “invisible” so your PNG slots show */
+.authOverlay input{
+  height: 44px;
+  padding: 0 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1a1208;
+  font-size: 16px;
+}
+
+.authOverlay input::placeholder{
+  color: rgba(26,18,8,0.55);
+}
+
+/* Keep a REAL submit button, but hide its look (click area over PNG button) */
+.authOverlay button{
+  margin-top: auto;
+  height: 54px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: transparent; /* hide text so the PNG art shows */
+}
+
+/* Optional: error bubble at top */
+.authErrorToast{
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  text-align: center;
+  font-weight: 800;
+  color: #ffd1d1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
