@@ -122,3 +122,101 @@ router.post('/login', async (request, response) => {
 });
 
 module.exports = router;
+
+// ================= FORGOT PASSWORD =================
+// Sends a reset link to the user's email (does NOT reveal whether email exists)
+router.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        // Always respond with success message (security best practice)
+        const genericMsg = "If that email exists, a password reset link has been sent.";
+
+        if (!email) {
+            return res.status(400).json({ error: "Email is required" });
+        }
+
+        const user = await User.findOne({ email });
+
+        // If user doesn't exist, still return generic message
+        if (!user) {
+            return res.status(200).json({ message: genericMsg });
+        }
+
+        // Optional: you can require verification before allowing reset
+        // If you want that, uncomment:
+        // if (!user.isVerified) {
+        //   return res.status(200).json({ message: genericMsg });
+        // }
+
+        const resetToken = crypto.randomBytes(20).toString('hex');
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
+        await user.save();
+
+        const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+        // Send reset email via SendGrid
+        await sgMail.send({
+            to: email,
+            from: process.env.SMTP_USER, // MUST be verified in SendGrid
+            subject: "Reset your SkillTree password",
+            html: `
+                <div style="text-align:center; font-family: Arial;">
+                    <h2>Password Reset Request</h2>
+                    <p>Click the button below to reset your password:</p>
+                    <a href="${resetLink}" 
+                       style="padding:10px 20px; background:#4CAF50; color:white; text-decoration:none; border-radius:5px;">
+                       Reset Password
+                    </a>
+                    <p style="margin-top:20px;">Or copy this link:</p>
+                    <p>${resetLink}</p>
+                    <p style="margin-top:20px; font-size:12px; color:#666;">
+                      This link expires in 1 hour.
+                    </p>
+                </div>
+            `
+        }).catch(err => console.error("SendGrid error:", err));
+
+        return res.status(200).json({ message: genericMsg });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Server error" });
+    }
+});
+
+// ================= RESET PASSWORD =================
+// Resets password using token from the email link
+router.post('/reset-password/:token', async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    try {
+        if (!password) {
+            return res.status(400).json({ error: "Password is required" });
+        }
+
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: new Date() } // must not be expired
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: "Invalid or expired reset token" });
+        }
+
+        const hashPassword = await bcrypt.hash(password, 10);
+
+        user.password = hashPassword;
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+
+        await user.save();
+
+        return res.status(200).json({ message: "Password reset successfully. You can now log in." });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Server error" });
+    }
+});
