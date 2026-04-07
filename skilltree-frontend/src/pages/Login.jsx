@@ -4,7 +4,7 @@ import { loginUser } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
 
 import AuthLayout from '../components/AuthLayout';
-import loginFrame from '../assets/auth/login-frame.png';
+import loginFrame from '../assets/auth/login_UI.png';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
