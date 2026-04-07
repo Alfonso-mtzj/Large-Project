@@ -1,6 +1,6 @@
 import React from "react";
 import "./authLayout.css";
-import forestBg from "../assets/auth/forest-bg.jpg";
+import forestBg from "../assets/auth/Login-register.png";
 
 export default function AuthLayout({ frameSrc, children }) {
   return (
