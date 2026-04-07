@@ -121,8 +121,6 @@ router.post('/login', async (request, response) => {
     }
 });
 
-module.exports = router;
-
 // ================= FORGOT PASSWORD =================
 // Sends a reset link to the user's email (does NOT reveal whether email exists)
 router.post('/forgot-password', async (req, res) => {
@@ -220,3 +218,5 @@ router.post('/reset-password/:token', async (req, res) => {
         return res.status(500).json({ error: "Server error" });
     }
 });
+
+module.exports = router;
