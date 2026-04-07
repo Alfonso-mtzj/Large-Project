@@ -2,7 +2,8 @@ import React from "react";
 import "./authLayout.css";
 import forestBg from "../assets/auth/Login-register.png";
 
-export default function AuthLayout({ frameSrc, children }) {
+// ADDED: overlayClassName prop so Register can use authOverlayRegister
+export default function AuthLayout({ frameSrc, children, overlayClassName = "authOverlay" }) {
   return (
     <div
       className="authBg"
@@ -12,7 +13,9 @@ export default function AuthLayout({ frameSrc, children }) {
     >
       <div className="authFrameWrap">
         <img className="authFrame" src={frameSrc} alt="" />
-        <div className="authOverlay">
+
+        {/* CHANGED: use overlayClassName instead of hardcoding authOverlay */}
+        <div className={overlayClassName}>
           {children}
         </div>
       </div>
