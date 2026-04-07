@@ -267,7 +267,7 @@ html, body, #root {
    Content x: ~25%–75%
    ========================================================= */
 .authOverlayRegister .authSlotTitle {
-  top: 9%;
+  top: 20%;
   font-size: clamp(16px, 3vw, 24px);
 }
 
@@ -277,11 +277,11 @@ html, body, #root {
 .authOverlayRegister .authSlotLabel:nth-of-type(4) { top: 67.5%; left: 26%; }
 
 .authOverlayRegister .authSlotInput:nth-of-type(1) {
-  top: 34.2%; height: 5.4%;
+  top: 29%; height: 5.4%;
   left: 33%; right: 30%;
 }
 .authOverlayRegister .authSlotInput:nth-of-type(2) {
-  top: 45.9%; height: 4.9%;
+  top: 47%; height: 4.9%;
   left: 33%; right: 30%;
 }
 .authOverlayRegister .authSlotInput:nth-of-type(3) {
