@@ -76,7 +76,7 @@ export default function Register() {
 
       {/* ✅ ADDED: Wrap the screen with the background + PNG frame.
           This doesn’t affect form logic; it just positions your inputs over the gold bars. */}
-      <AuthLayout frameSrc={registerFrame}>
+      <AuthLayout frameSrc={registerFrame} overlayClassName="authOverlayRegister">
         {/* ✅ IMPORTANT: Keep a REAL <form> for Enter-to-submit and browser autofill.
             `display: contents` makes the form not create a layout box so inputs can align to the overlay. */}
         <form onSubmit={handleSubmit} style={{ display: 'contents' }}>
