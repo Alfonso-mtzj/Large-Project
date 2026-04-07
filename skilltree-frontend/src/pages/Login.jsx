@@ -30,7 +30,7 @@ export default function Login() {
     <>
       {error && <div className="authErrorToast">{error}</div>}
 
-      <AuthLayout frameSrc={loginFrame}>
+      <AuthLayout frameSrc={loginFrame} overlayClassName="authOverlay">
         <form onSubmit={handleSubmit} style={{ display: 'contents' }}>
           <input
             name="email"
