@@ -34,3 +34,4 @@ export const resetPassword = (token, password) =>
   API.post(`/api/reset-password/${token}`, { password });
 
 export default API;
+
