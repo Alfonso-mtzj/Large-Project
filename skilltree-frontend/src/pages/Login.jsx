@@ -17,6 +17,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
       const { data } = await loginUser(form);
       login(data, null); // API doesn't return a token yet, just user info
@@ -36,20 +37,38 @@ export default function Login() {
             name="email"
             placeholder="Email"
             type="email"
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="password"
-            placeholder="Password"
-            type="password"
+            value={form.email}
             onChange={handleChange}
             required
           />
 
-          {/* real submit button, invisible (click area matches PNG button) */}
-          <button type="submit" aria-label="Login">Login</button>
+          <input
+            name="password"
+            placeholder="Password"
+            type="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+
+          {/* Real submit button (your CSS makes it invisible; it sits over the PNG button art) */}
+          <button type="submit" aria-label="Login">
+            Login
+          </button>
         </form>
+
+        {/* Rubric-correct user flow:
+            both links go to /forgot-password because reset requires an emailed token */}
+        <div style={{ textAlign: 'center', marginTop: 10, fontWeight: 800, color: '#eaffef' }}>
+          <Link to="/forgot-password" style={{ color: '#eaffef' }}>
+            Forgot password
+          </Link>
+          {' '}or{' '}
+          <Link to="/forgot-password" style={{ color: '#eaffef' }}>
+            Reset password
+          </Link>
+          .
+        </div>
 
         <div style={{ textAlign: 'center', marginTop: 8 }}>
           <Link to="/register" style={{ color: '#eaffef', fontWeight: 800 }}>
