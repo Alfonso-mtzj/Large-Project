@@ -1,26 +1,48 @@
 .authBg{
+/* =========================================================
+   Auth layout styles for:
+   - Forest background (Login-register.png)
+   - PNG frame overlays (login_UI.png / register_UI.png)
+   - Real inputs/buttons positioned on top of the PNG “slots”
+   ========================================================= */
+
+/* Full-page background wrapper */
+.authBg{
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 24px 12px;
+
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* Container that holds the frame image + the overlayed form fields */
 .authFrameWrap{
   position: relative;
   width: min(520px, 92vw);
-  aspect-ratio: 1 / 1.25; /* adjust if your PNG is taller/shorter */
+
+  /* Keeps the frame proportion consistent across screen sizes */
+  aspect-ratio: 1 / 1.25;
 }
 
+/* The UI frame PNG (transparent background) */
 .authFrame{
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+
+  /* Don’t allow selecting or clicking the image */
+  user-select: none;
+  pointer-events: none;
 }
 
-/* this is where the REAL form lives */
+/* =========================================================
+   LOGIN overlay: aligns to login_UI.png (2 fields + button)
+   Tweak top/bottom by a few % if needed.
+   ========================================================= */
 .authOverlay{
   position: absolute;
   left: 14%;
@@ -33,37 +55,81 @@
   gap: 14px;
 }
 
-/* Inputs should be “invisible” so your PNG slots show */
-.authOverlay input{
+/* =========================================================
+   REGISTER overlay: aligns to register_UI.png (4 fields + button)
+   Use: <AuthLayout overlayClassName="authOverlayRegister" ... />
+   Tweak top/bottom by a few % if needed.
+   ========================================================= */
+.authOverlayRegister{
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 24%;
+  bottom: 14%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Inputs are transparent so the PNG gold bars show through */
+.authOverlay input,
+.authOverlayRegister input{
+  width: 100%;
   height: 44px;
   padding: 0 14px;
+
   border: none;
   outline: none;
   background: transparent;
+  appearance: none;
+
   color: #1a1208;
   font-size: 16px;
 }
 
-.authOverlay input::placeholder{
+.authOverlay input::placeholder,
+.authOverlayRegister input::placeholder{
   color: rgba(26,18,8,0.55);
 }
 
-/* Keep a REAL submit button, but hide its look (click area over PNG button) */
-.authOverlay button{
+/* Nice focus glow that matches the forest vibe */
+.authOverlay input:focus,
+.authOverlayRegister input:focus{
+  box-shadow: 0 0 0 3px rgba(120, 255, 170, 0.22);
+  border-radius: 10px;
+}
+
+/* Real submit button, but invisible so the PNG button art shows */
+.authOverlay button,
+.authOverlayRegister button{
   margin-top: auto;
+  width: 100%;
   height: 54px;
+
   border: none;
   background: transparent;
   cursor: pointer;
-  color: transparent; /* hide text so the PNG art shows */
+
+  /* hide text (PNG already contains the button art) */
+  color: transparent;
 }
 
-/* Optional: error bubble at top */
+/* Visible focus for keyboard navigation */
+.authOverlay button:focus-visible,
+.authOverlayRegister button:focus-visible{
+  box-shadow: 0 0 0 3px rgba(120, 255, 170, 0.35);
+  border-radius: 12px;
+}
+
+/* Toast message shown at the top of the screen */
 .authErrorToast{
   position: fixed;
   top: 12px;
   left: 12px;
   right: 12px;
+  z-index: 999;
+
   text-align: center;
   font-weight: 800;
   color: #ffd1d1;
