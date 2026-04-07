@@ -8,7 +8,7 @@ import AuthLayout from '../components/AuthLayout';
 
 // ✅ The “register parchment/frame” PNG you uploaded.
 // This is the image with 4 gold input bars + a button area.
-import registerFrame from '../assets/auth/register-frame.png';
+import registerFrame from '../assets/auth/register_UI.png';
 
 export default function Register() {
   // ✅ Keep your original form structure because your backend expects:
