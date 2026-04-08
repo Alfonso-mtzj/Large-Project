@@ -239,11 +239,11 @@ html, body, #root {
 .authOverlay .authSlotLabel:nth-of-type(2) { top: 44.6%; left: 13%; }
 
 .authOverlay .authSlotInput:nth-of-type(1) {
-  top: 32.9%; height: 3.3%;
+  top: 32.5%; height: 3.3%;
   left: 28%; right: 28%;
 }
 .authOverlay .authSlotInput:nth-of-type(2) {
-  top: 47%; height: 3.3%;
+  top: 49%; height: 3.3%;
   left: 28%; right: 28%;
 }
 
@@ -252,7 +252,7 @@ html, body, #root {
 }
 
 .authOverlay .authSlotBtn {
-  top: 83%; height: 5.9%;
+  top: 88%; height: 5.9%;
   left: 25%; right: 28%;
 }
 
