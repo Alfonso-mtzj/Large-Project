@@ -7,9 +7,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1 style={{ color: 'red', fontSize: '50px' }}>
-        NEW DASHBOARD TEST
-      </h1>
     <div className="dashboardBg"
       style={{ backgroundImage: `url(${bg})` }}
     >
@@ -20,8 +17,10 @@ export default function Dashboard() {
           <p>Level 1</p>
 
           <div className="xpBar">
-            <div className="xpFill"></div>
-          </div>
+            const xp = 0;        // current XP
+            const maxXp = 100;  // level cap
+            const xpPercent = (xp / maxXp) * 100;
+            <div className="xpFill" style={{ width: `${xpPercent}%` }}></div>
         </div>
 
         <div className="statsPanel">
