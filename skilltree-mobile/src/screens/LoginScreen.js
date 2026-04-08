@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import AuthContainer from '../components/AuthContainer';
 import { loginUser } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
+import { authStyles } from '../styles/authStyles';
+import { SPACING } from '../../../skilltree-shared/theme';
 
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
@@ -13,53 +16,81 @@ export default function LoginScreen({ navigation }) {
 
   const onSubmit = async () => {
     setError('');
+
+    if (!form.email || !form.password) {
+      setError('Please fill in all fields');
+      return;
+    }
+
     setLoading(true);
     try {
       const { data } = await loginUser(form);
-      login(data);
+      await login(data);
       navigation.replace('Dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      const errorMessage = err.response?.data?.error || 'Login failed';
+      setError(errorMessage);
+      Alert.alert('Login Error', errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={{ padding: 16 }}>
-      <Text style={{ fontSize: 24, marginBottom: 16 }}>Login</Text>
+    <AuthContainer
+      frameImage={require('../assets/auth/login_UI.png')}
+      frameAspectRatio={0.75}
+      maxFrameWidth={420}
+    >
+      {error && (
+        <View style={authStyles.errorContainer}>
+          <Text style={authStyles.errorText}>{error}</Text>
+        </View>
+      )}
 
-      {error ? <Text style={{ color: 'red', marginBottom: 12 }}>{error}</Text> : null}
+      <View style={authStyles.form}>
+        <Text style={authStyles.title}>Log In</Text>
 
-      <Input
-        label="Email"
-        value={form.email}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        onChangeText={(v) => setForm((f) => ({ ...f, email: v }))}
-      />
-      <Input
-        label="Password"
-        value={form.password}
-        secureTextEntry
-        onChangeText={(v) => setForm((f) => ({ ...f, password: v }))}
-      />
+        <Input
+          label="Email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChangeText={(v) => setForm((f) => ({ ...f, email: v }))}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          style={{ marginTop: SPACING.xl }}
+        />
 
-      <Button title={loading ? 'Logging in...' : 'Login'} onPress={onSubmit} disabled={loading} />
+        <Input
+          label="Password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChangeText={(v) => setForm((f) => ({ ...f, password: v }))}
+          secureTextEntry
+        />
 
-      <Text style={{ marginTop: 14 }}>
-        Don’t have an account?{' '}
-        <Text style={{ color: 'blue' }} onPress={() => navigation.navigate('Register')}>
-          Register
-        </Text>
-      </Text>
+        <Button
+          title={loading ? 'Logging in...' : 'Log In'}
+          onPress={onSubmit}
+          disabled={loading}
+          style={{ marginTop: SPACING.xl }}
+        />
 
-      <Text style={{ marginTop: 10 }}>
-        Have a verification token?{' '}
-        <Text style={{ color: 'blue' }} onPress={() => navigation.navigate('Verify')}>
-          Verify
-        </Text>
-      </Text>
-    </View>
+        <View style={authStyles.linksContainer}>
+          <Text
+            style={authStyles.link}
+            onPress={() => navigation.navigate('Register')}
+          >
+            Don't have an account? Register
+          </Text>
+          <Text
+            style={authStyles.link}
+            onPress={() => navigation.navigate('Verify')}
+          >
+            Have a verification token? Verify
+          </Text>
+        </View>
+      </View>
+    </AuthContainer>
   );
 }
