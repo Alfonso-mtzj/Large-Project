@@ -1,0 +1,7 @@
+{
+  "name": "skilltree-shared",
+  "version": "1.0.0",
+  "description": "Shared design system for SkillTree",
+  "main": "theme.js",
+  "private": true
+}
