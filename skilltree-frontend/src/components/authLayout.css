@@ -337,7 +337,6 @@ html, body, #root {
 /* =========================================================
    TOAST
    ========================================================= */
-//register failed/ login failed
 .authErrorToast {
   position: fixed;
   top: 120px;
