@@ -1,11 +1,14 @@
 import { useAuth } from '../context/AuthContext';
 import './dashboard.css';
+import bg from '../assets/auth/dashboard.png';
 
 export default function Dashboard() {
   const { user } = useAuth();
 
   return (
-    <div className="dashboardBg">
+    <div className="dashboardBg"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <div className="dashboardFrame">
 
         <div className="characterPanel">
