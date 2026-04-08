@@ -23,6 +23,22 @@
   text-align: center;
   margin-bottom: 30px;
   font-family: 'Cinzel', serif;
+
+  padding: 20px;
+  border-radius: 16px;
+
+  background: rgba(20, 15, 5, 0.6);
+
+  border: 1px solid rgba(255, 220, 100, 0.4);
+
+  box-shadow:
+    0 0 15px rgba(255, 220, 100, 0.25),
+    inset 0 0 10px rgba(255, 220, 100, 0.15);
+}
+
+.characterPanel h2 {
+  color: #f5e8b0;
+  text-shadow: 0 0 10px rgba(255, 220, 100, 0.6);
 }
 
 .xpBar {
