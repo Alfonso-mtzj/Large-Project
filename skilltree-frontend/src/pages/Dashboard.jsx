@@ -6,6 +6,10 @@ export default function Dashboard() {
   const { user } = useAuth();
 
   return (
+    <>
+      <h1 style={{ color: 'red', fontSize: '50px' }}>
+        NEW DASHBOARD TEST
+      </h1>
     <div className="dashboardBg"
       style={{ backgroundImage: `url(${bg})` }}
     >
@@ -46,5 +50,6 @@ export default function Dashboard() {
 
       </div>
     </div>
+    </>
   );
 }
