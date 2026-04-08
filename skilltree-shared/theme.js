@@ -1,10 +1,11 @@
 export const COLORS = {
   primary: {
     gold: '#c9a84c',
+    goldLight: '#f0d080',
+    goldAccent: '#ffd700',
     darkGold: '#8b6914',
-    lightGold: '#f0d080',
   },
-  background: '#1a2e1a',
+  background: '#1a1a1a',
   surface: '#f5e6c8',
   surfaceDark: '#2c1a0e',
   inputBackground: '#1a1200',
@@ -19,10 +20,22 @@ export const COLORS = {
 
 export const FONTS = {
   decorative: 'Cinzel_700Bold',
-  heading: 'Cinzel_600SemiBold',
+  primary: 'Cinzel_600SemiBold',
+  regular: 'Cinzel_400Regular',
   body: 'CrimsonText_400Regular',
   bodySemiBold: 'CrimsonText_600SemiBold',
-  regular: 'Cinzel_400Regular',
+};
+
+export const FONT_SIZES = {
+  xs: 10,
+  sm: 12,
+  base: 14,
+  md: 16,
+  lg: 18,
+  xl: 20,
+  '2xl': 24,
+  '3xl': 30,
+  '4xl': 36,
 };
 
 export const SPACING = {
