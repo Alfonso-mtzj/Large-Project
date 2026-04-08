@@ -1,19 +1,31 @@
-import React from 'react';
-import { Pressable, Text } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text } from 'react-native';
+import { authStyles } from '../styles/authStyles';
 
-export default function Button({ title, onPress, disabled }) {
+export default function Button({ 
+  title, 
+  onPress, 
+  disabled = false, 
+  style,
+  variant = 'primary' // 'primary' or 'secondary'
+}) {
+  const [isPressed, setIsPressed] = useState(false);
+
   return (
-    <Pressable
+    <TouchableOpacity
+      style={[
+        authStyles.button,
+        isPressed && authStyles.buttonPressed,
+        disabled && authStyles.buttonDisabled,
+        style,
+      ]}
       onPress={onPress}
+      onPressIn={() => setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
       disabled={disabled}
-      style={{
-        backgroundColor: disabled ? '#9aa0a6' : '#2e7d32',
-        padding: 12,
-        borderRadius: 6,
-        alignItems: 'center'
-      }}
+      activeOpacity={0.8}
     >
-      <Text style={{ color: 'white', fontWeight: '600' }}>{title}</Text>
-    </Pressable>
+      <Text style={authStyles.buttonText}>{title}</Text>
+    </TouchableOpacity>
   );
 }
