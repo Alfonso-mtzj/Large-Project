@@ -1,17 +1,22 @@
 .dashboardBg {
   min-height: 100vh;
-  background: url('/forest-bg.jpg') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.dashboardBg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
 .dashboardFrame {
-  width: 900px;
-  padding: 40px;
-  background: rgba(255, 240, 200, 0.85);
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(255, 220, 100, 0.4);
+  position: relative;
+  z-index: 2;
 }
 
 .characterPanel {
