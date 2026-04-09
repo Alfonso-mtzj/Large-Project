@@ -46,3 +46,11 @@ export const SPACING = {
   xl: 32,
   xxl: 48,
 };
+
+export const BORDER_RADIUS = {
+  sm: 4,
+  md: 8,
+  lg: 16,
+  xl: 24,
+  full: 9999,
+};
