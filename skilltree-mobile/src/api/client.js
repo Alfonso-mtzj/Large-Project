@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Expo uses EXPO_PUBLIC_* variables
-const baseURL = process.env.EXPO_PUBLIC_API_URL || 'http://lifexpskilltree.xyz:5000';
+const baseURL = process.env.EXPO_PUBLIC_API_URL || 'http://lifexpskilltree.xyz';
 
 export const api = axios.create({
   baseURL,
