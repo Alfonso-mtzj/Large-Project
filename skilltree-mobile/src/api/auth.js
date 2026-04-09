@@ -12,5 +12,5 @@ export const verifyEmail = (token) =>
 export const forgotPassword = (email) => 
   api.post('/api/forgot-password', { email });
 
-export const resetPassword = (token, newPassword) => 
-  api.post(`/api/reset-password/${token}`, { newPassword });
+export const resetPassword = (token, password) => 
+  api.post(`/api/reset-password/${token}`, { password });
