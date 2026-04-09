@@ -7,7 +7,7 @@ export const loginUser = (payload) =>
   api.post('/api/login', payload);
 
 export const verifyEmail = (token) => 
-  api.post(`/api/verify/${token}`);
+  api.get(`/api/verify/${token}`);
 
 export const forgotPassword = (email) => 
   api.post('/api/forgot-password', { email });
