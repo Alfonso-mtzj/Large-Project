@@ -1,16 +1,16 @@
 import { api } from './client';
 
 export const registerUser = (payload) => 
-  api.post('/api/auth/register', payload);
+  api.post('/api/register', payload);
 
 export const loginUser = (payload) => 
-  api.post('/api/auth/login', payload);
+  api.post('/api/login', payload);
 
 export const verifyEmail = (token) => 
-  api.post(`/api/auth/verify/${token}`);
+  api.post(`/api/verify/${token}`);
 
 export const forgotPassword = (email) => 
-  api.post('/api/auth/forgot-password', { email });
+  api.post('/api/forgot-password', { email });
 
 export const resetPassword = (token, newPassword) => 
-  api.post(`/api/auth/reset-password/${token}`, { newPassword });
+  api.post(`/api/reset-password/${token}`, { newPassword });
