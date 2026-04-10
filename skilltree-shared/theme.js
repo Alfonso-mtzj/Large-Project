@@ -5,6 +5,16 @@ export const COLORS = {
     goldAccent: '#ffd700',
     darkGold: '#8b6914',
   },
+  dark: {
+    black: '#0d0d0d',
+    brown: '#3b2507',
+    darkBrown: '#1a0e05',
+  },
+  semantic: {
+    error: '#ff6b6b',
+    success: '#90ee90',
+    warning: '#ffd700',
+  },
   background: '#1a1a1a',
   surface: '#f5e6c8',
   surfaceDark: '#2c1a0e',
@@ -14,8 +24,6 @@ export const COLORS = {
   textDark: '#3b2507',
   textLight: '#f5e6c8',
   textGold: '#c9a84c',
-  success: '#4a7c4e',
-  error: '#8b2020',
 };
 
 export const FONTS = {
