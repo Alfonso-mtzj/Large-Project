@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './dashboard.css';
 import bg from '../assets/auth/dashboard.png';
+import { useState, useEffect } from 'react'; //keeps friends
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -199,10 +200,27 @@ export default function Dashboard() {
             <button onClick={() => {
               console.log({ selectedFriend, activity, startTime, endTime });
       
-              if (!selectedFriend || !activity || !startTime || !endtime) {
+              if (!selectedFriend || !activity || !startTime || !endtime → true) {
                 alert("You must fill everything out");
                 return;
               }
+
+              //keep friends
+              useEffect(() => {
+                const savedFriends = localStorage.getItem('friends');
+                const savedPlans = localStorage.getItem('plans');
+
+                if (savedFriends) setFriends(JSON.parse(savedFriends));
+                if (savedPlans) setPlans(JSON.parse(savedPlans));
+              }, []);
+
+              useEffect(() => {
+                localStorage.setItem('friends', JSON.stringify(friends));
+              }, [friends]);
+
+              useEffect(() => {
+                localStorage.setItem('plans', JSON.stringify(plans));
+              }, [plans]);
 
               //xp based on time
               const start = new Date(`${date}T${startTime}`);
@@ -243,6 +261,8 @@ export default function Dashboard() {
                 }
               ]);
 
+              setSelectedFriend('');
+              setDate(''):
               setActivity('');
               setStartTime('');
               setEndTime('');
