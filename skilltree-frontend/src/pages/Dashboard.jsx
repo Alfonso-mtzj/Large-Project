@@ -6,29 +6,25 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user } = useAuth();
-
   const navigate = useNavigate();
 
-  // Stats
   const [studyHours, setStudyHours] = useState(0);
   const [activityMinutes, setActivityMinutes] = useState(0);
 
-  // Health
   const [meal, setMeal] = useState('');
   const [showCalories, setShowCalories] = useState(false);
   const [calories, setCalories] = useState('');
 
-  // Relationships
   const [newFriend, setNewFriend] = useState('');
   const [selectedFriend, setSelectedFriend] = useState('');
   const [activity, setActivity] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [date, setDate] = useState('');
+
   const [friends, setFriends] = useState([]);
   const [plans, setPlans] = useState([]);
 
-  // Player
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
 
@@ -46,7 +42,6 @@ export default function Dashboard() {
     setXp(newXp);
   };
 
-  // Load data
   useEffect(() => {
     const savedFriends = localStorage.getItem('friends');
     const savedPlans = localStorage.getItem('plans');
@@ -55,7 +50,6 @@ export default function Dashboard() {
     if (savedPlans) setPlans(JSON.parse(savedPlans));
   }, []);
 
-  // Save data
   useEffect(() => {
     localStorage.setItem('friends', JSON.stringify(friends));
   }, [friends]);
@@ -66,66 +60,44 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* TABS */}
+      {/* NAV */}
       <div style={{ marginBottom: "20px" }}>
-        <button onClick={() => navigate('/dashboard')}>
-          🧙 Home
-        </button>
-
-        <button onClick={() => navigate('/calendar')}>
-          📅 Calendar
-        </button>
+        <button onClick={() => navigate('/dashboard')}>🧙 Home</button>
+        <button onClick={() => navigate('/calendar')}>📅 Calendar</button>
       </div>
 
-      {/* MAIN UI */}
-      <div
-        className="dashboardBg"
-        style={{ backgroundImage: `url(${bg})` }}
-      >
+      <div className="dashboardBg" style={{ backgroundImage: `url(${bg})` }}>
         <div className="dashboardFrame">
 
-          {/* CHARACTER */}
           <div className="characterPanel">
             <h2>{user?.email || "Adventurer"}</h2>
             <p>Level {level}</p>
 
             <div className="xpBar">
-              <div
-                className="xpFill"
-                style={{ width: `${xpPercent}%` }}
-              ></div>
+              <div className="xpFill" style={{ width: `${xpPercent}%` }} />
             </div>
           </div>
 
           <div className="statsPanel">
 
-            {/* Intelligence */}
             <div className="card">
               <h3>🧠 Intelligence</h3>
               <p>{studyHours} hrs</p>
-
               <button onClick={() => {
                 setStudyHours(studyHours + 1);
                 gainXp(10);
-              }}>
-                +1 Hour
-              </button>
+              }}>+1 Hour</button>
             </div>
 
-            {/* Strength */}
             <div className="card">
               <h3>💪 Strength</h3>
               <p>{activityMinutes} mins</p>
-
               <button onClick={() => {
                 setActivityMinutes(activityMinutes + 10);
                 gainXp(8);
-              }}>
-                +10 min
-              </button>
+              }}>+10 min</button>
             </div>
 
-            {/* Health */}
             <div className="card">
               <h3>🍎 Health</h3>
 
@@ -154,12 +126,9 @@ export default function Dashboard() {
                 />
               )}
 
-              <button onClick={() => gainXp(5)}>
-                Log Meal
-              </button>
+              <button onClick={() => gainXp(5)}>Log Meal</button>
             </div>
 
-            {/* Add Friend */}
             <div className="card">
               <h3>👥 Add Friend</h3>
 
@@ -173,38 +142,24 @@ export default function Dashboard() {
               <button onClick={() => {
                 if (!newFriend.trim()) return;
 
-                setFriends([
-                  ...friends,
-                  { name: newFriend, xp: 0, level: 1 }
-                ]);
-
+                setFriends([...friends, { name: newFriend, xp: 0, level: 1 }]);
                 setNewFriend('');
               }}>
                 Add Friend
               </button>
             </div>
 
-            {/* Planner */}
             <div className="card">
               <h3>📆 Planner</h3>
 
-              <select
-                value={selectedFriend}
-                onChange={(e) => setSelectedFriend(e.target.value)}
-              >
+              <select value={selectedFriend} onChange={(e) => setSelectedFriend(e.target.value)}>
                 <option value="">Select Friend</option>
                 {friends.map((f, i) => (
                   <option key={i} value={f.name}>{f.name}</option>
                 ))}
               </select>
 
-              <input
-                type="text"
-                placeholder="What are you doing?"
-                value={activity}
-                onChange={(e) => setActivity(e.target.value)}
-              />
-
+              <input type="text" placeholder="What are you doing?" value={activity} onChange={(e) => setActivity(e.target.value)} />
               <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
               <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
               <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
@@ -245,7 +200,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* Relationships */}
             <div className="card">
               <h3>💕 Relationships</h3>
               {friends.map((f, i) => (
