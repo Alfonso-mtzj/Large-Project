@@ -211,7 +211,7 @@ export default function Dashboard() {
               const durationHours = (end - start) / (1000 * 60 * 60);
 
               // give player xp
-              gainXp(Math.round(durationHours * 10);
+              gainXp(Math.round(durationHours * 10));
 
               // give friend xp
               const updatedFriends = friends.map(f => {
