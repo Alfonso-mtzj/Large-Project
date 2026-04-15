@@ -307,7 +307,7 @@ export default function Dashboard() {
                   activity,
                   date,
                   startTime,
-                  endTime
+                  endTime,
                   studyHours,
                   activityMinutes,
                   calories
@@ -334,50 +334,6 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="card">
-            <h3>📅 Calendar</h3>
-
-            {/* Month controls */}
-            <div className="calendarHeader">
-              <button onClick={() => changeMonth(-1)}>◀</button>
-              <span>
-                {currentDate.toLocaleString('default', {
-                  month: 'long',
-                  year: 'numeric'
-                })}
-              </span>
-              <button onClick={() => changeMonth(1)}>▶</button>
-            </div>
-
-            {/* Grid */}
-            <div className="calendarGrid">
-              {days.map((day, i) => {
-                const dayPlans = plans.filter(p => p.date === day);
-                
-                return (
-                  <div
-                    key={i}
-                    className={`calendarCell ${
-                      day === selectedDate ? 'selectedDay' : ''
-                    }`}
-                    onClick={() => setSelectedDate(day)}
-                  >
-                    {day && (
-                      <>
-                        <div className="dayNumber">
-                          {new Date(day).getDate()}
-                        </div>
-                        
-                        {dayPlans.length > 0 && (
-                          <div className="eventDot"></div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
             {/* Selected day plans */}
             <div className="dayPlans">
               <h4>{selectedDate || "Select a day"}</h4>
@@ -386,7 +342,7 @@ export default function Dashboard() {
                 .filter(p => p.date === selectedDate)
                 .map((p, i) => (
                   <div key={i}>
-                    <strong>{.pfriend}</strong>: {p.activity}<br />
+                    <strong>{p.friend}</strong>: {p.activity}<br />
                     {p.startTime} - {p.endTime}<br />
 
                     📚 Study: {p.studyHours} hrs<br />
