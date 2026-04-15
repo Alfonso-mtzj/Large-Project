@@ -24,7 +24,7 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/calendar" element={<Calendar plans={plans} />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
