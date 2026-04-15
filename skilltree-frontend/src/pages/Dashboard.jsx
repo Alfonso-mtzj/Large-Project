@@ -217,7 +217,12 @@ export default function Dashboard() {
               // save plan
               setPlans([
                 ...plans,
-                `${selectedFriend}: ${activity} (${startTime}-${endTime})`
+                {
+                  friend: selectedFriend,
+                  activity,
+                  startTime,
+                  endTime
+                }
               ]);
 
               setActivity('');
@@ -229,7 +234,11 @@ export default function Dashboard() {
 
             {/* Plans list */}
             <ul>
-              {plans.map((p, i) => <li key={i}>{p}</li>)}
+              {plans.map((p, i) => (
+                <li key={i}>
+                  {p.friend}: {p.activity} ({p.startTime} - {p.endTime})
+                </li>
+              ))}
             </ul>
           </div>
 
