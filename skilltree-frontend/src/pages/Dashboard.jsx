@@ -2,6 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import './dashboard.css';
 import bg from '../assets/auth/dashboard.png';
 import { useState, useEffect } from 'react'; //keeps friends
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -30,6 +31,9 @@ export default function Dashboard() {
   //Calendar
   const [selectedDate, setSelectedDate] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  //tabs
+  const navigate = useNavigate();
   
   //User
   const [xp, setXp] = useState(0);
@@ -100,6 +104,17 @@ export default function Dashboard() {
 
   const days = getDaysInMonth(currentDate);
   return (
+    //tabs
+    <div style={{ marginBottom: "20px" }}>
+      <button onClick={() => navigate('/dashboard')}>
+        🧙 Home
+      </button>
+
+      <button onClick={() => navigate('/calendar')}>
+        📅 Calendar
+      </button>
+    </div>
+
     <div
       className="dashboardBg"
       style={{ backgroundImage: `url(${bg})` }}
@@ -293,6 +308,9 @@ export default function Dashboard() {
                   date,
                   startTime,
                   endTime
+                  studyHours,
+                  activityMinutes,
+                  calories
                 }
               ]);
 
@@ -368,8 +386,13 @@ export default function Dashboard() {
                 .filter(p => p.date === selectedDate)
                 .map((p, i) => (
                   <div key={i}>
-                    {p.friend}: {p.activity}<br />
-                    {p.startTime} - {p.endTime}
+                    <strong>{.pfriend}</strong>: {p.activity}<br />
+                    {p.startTime} - {p.endTime}<br />
+
+                    📚 Study: {p.studyHours} hrs<br />
+                    💪 Activity: {p.activityMinutes} mins<br />
+                    🍎 Calories: {p.calories || "N/A"}
+                    
                   </div>
                 ))}
             </div>
