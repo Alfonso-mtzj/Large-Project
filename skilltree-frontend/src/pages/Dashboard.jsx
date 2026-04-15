@@ -29,7 +29,6 @@ export default function Dashboard() {
 
   //Calendar
   const [selectedDate, setSelectedDate] = useState('');
-  const filteredPlans = selectedDate ? plans.filter(p => p.date === selectedDate) : plans;
   const [currentDate, setCurrentDate] = useState(new Date());
   
   //User
@@ -254,7 +253,7 @@ export default function Dashboard() {
             <button onClick={() => {
               console.log({ selectedFriend, activity, startTime, endTime });
       
-              if (!selectedFriend || !activity || !startTime || !endTime) {
+              if (!selectedFriend || !activity || !date || !startTime || !endTime) {
                 alert("You must fill everything out");
                 return;
               }
@@ -322,16 +321,14 @@ export default function Dashboard() {
 
             {/* Month controls */}
             <div className="calendarHeader">
-              <button onClick={() => changeMonth(-1)}>
-              </button>
+              <button onClick={() => changeMonth(-1)}>◀</button>
               <span>
                 {currentDate.toLocaleString('default', {
                   month: 'long',
                   year: 'numeric'
                 })}
               </span>
-              <button onClick={() => changeMonth(1)}>
-              </button>
+              <button onClick={() => changeMonth(1)}>▶</button>
             </div>
 
             {/* Grid */}
@@ -342,9 +339,9 @@ export default function Dashboard() {
                 return (
                   <div
                     key={i}
-                    className={'calendarCell ${
+                    className={`calendarCell ${
                       day === selectedDate ? 'selectedDay' : ''
-                    }'}
+                    }`}
                     onClick={() => setSelectedDate(day)}
                   >
                     {day && (
@@ -377,23 +374,6 @@ export default function Dashboard() {
                 ))}
             </div>
           </div>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-            />
-
-            {filteredPlans.length === 0 ? (
-              <p>No plans for this day</p>
-            ) : (
-              filteredPlans.map((p, i) => (
-              <div key={i} style={{ marginBottom: "10px" }}>
-                <strong>{p.date}</strong><br />
-                {p.friend}: {p.activity}<br />
-                {p.startTime} - {p.endTime}
-              </div>
-            ))
-          )}
         </div>
       </div>
     </div>
