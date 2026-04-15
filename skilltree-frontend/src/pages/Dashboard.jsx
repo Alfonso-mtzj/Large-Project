@@ -30,6 +30,7 @@ export default function Dashboard() {
   //Calendar
   const [selectedDate, setSelectedDate] = useState('');
   const filteredPlans = selectedDate ? plans.filter(p => p.date === selectedDate) : plans;
+  const [currentDate, setCurrentDate] = useState(new Date());
   
   //User
   const [xp, setXp] = useState(0);
@@ -67,6 +68,38 @@ export default function Dashboard() {
     localStorage.setItem('plans', JSON.stringify(plans));
   }, [plans]);
 
+  //Calendar Grid Set-up
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    const days = [];
+
+    // empty slots before month starts
+    for (let i = 0; i < firstDay.getDay(); i++) {
+      days.push(null);
+    }
+
+    // actual days
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+      const fullDate = new Date(year, month, d);
+      const formatted = fullDate.toISOString().split('T')[0];
+
+      days.push(formatted);
+    }
+
+    return days;
+  };
+  const changeMonth = (offset) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() + offset);
+    setCurrentDate(newDate);
+  };
+
+  const days = getDaysInMonth(currentDate);
   return (
     <div
       className="dashboardBg"
@@ -287,6 +320,63 @@ export default function Dashboard() {
           <div className="card">
             <h3>📅 Calendar</h3>
 
+            {/* Month controls */}
+            <div className="calendarHeader">
+              <button onClick={() => changeMonth(-1)}>
+              </button>
+              <span>
+                {currentDate.toLocaleString('default', {
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </span>
+              <button onClick={() => changeMonth(1)}>
+              </button>
+            </div>
+
+            {/* Grid */}
+            <div className="calendarGrid">
+              {days.map((day, i) => {
+                const dayPlans = plans.filter(p => p.date === day);
+                
+                return (
+                  <div
+                    key={i}
+                    className={'calendarCell ${
+                      day === selectedDate ? 'selectedDay' : ''
+                    }'}
+                    onClick={() => setSelectedDate(day)}
+                  >
+                    {day && (
+                      <>
+                        <div className="dayNumber">
+                          {new Date(day).getDate()}
+                        </div>
+                        
+                        {dayPlans.length > 0 && (
+                          <div className="eventDot"></div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Selected day plans */}
+            <div className="dayPlans">
+              <h4>{selectedDate || "Select a day"}</h4>
+            
+              {plans
+                .filter(p => p.date === selectedDate)
+                .map((p, i) => (
+                  <div key={i}>
+                    {p.friend}: {p.activity}<br />
+                    {p.startTime} - {p.endTime}
+                  </div>
+                ))}
+            </div>
+          </div>
             <input
               type="date"
               value={selectedDate}
