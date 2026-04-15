@@ -200,7 +200,7 @@ export default function Dashboard() {
             <button onClick={() => {
               console.log({ selectedFriend, activity, startTime, endTime });
       
-              if (!selectedFriend || !activity || !startTime || !endtime → true) {
+              if (!selectedFriend || !activity || !startTime || !endtime) {
                 alert("You must fill everything out");
                 return;
               }
