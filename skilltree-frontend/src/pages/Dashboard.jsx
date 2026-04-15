@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [endTime, setEndTime] = useState('');
   const [friends, setFriends] = useState([]);
   const [plans, setPlans] = useState([]);
+  const [date, setDate] = useState('');
 
   //User
   const [xp, setXp] = useState(0);
@@ -154,7 +155,7 @@ export default function Dashboard() {
 
           {/* RELATIONSHIPS */}
          <div className="card">
-            <h3>💕 Relationships</h3>
+            <h3>📆Planner</h3>
 
             {/* Friend dropdown */}
             <select
@@ -174,7 +175,14 @@ export default function Dashboard() {
               value={activity}
               onChange={(e) => setActivity(e.target.value)}
             />
-
+           
+            {/* Date */}
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+           
             {/* Time */}
             <input
               type="time"
@@ -189,12 +197,21 @@ export default function Dashboard() {
             />
 
             <button onClick={() => {
-              if (!selectedFriend || !activity || !startTime || !endtime) return;
+              console.log({ selectedFriend, activity, startTime, endTime });
+      
+              if (!selectedFriend || !activity || !startTime || !endtime) {
+                alert("You must fill everything out");
+                return;
+              }
 
-              const duration = 1; // later calculate from time
+              //xp based on time
+              const start = new Date(`${date}T${startTime}`);
+              const end = new Date(`${date}T${endTime}`);
+
+              const durationHours = (end - start) / (1000 * 60 * 60);
 
               // give player xp
-              gainXp(12);
+              gainXp(Math.round(durationHours * 10);
 
               // give friend xp
               const updatedFriends = friends.map(f => {
@@ -220,6 +237,7 @@ export default function Dashboard() {
                 {
                   friend: selectedFriend,
                   activity,
+                  date,
                   startTime,
                   endTime
                 }
@@ -236,7 +254,9 @@ export default function Dashboard() {
             <ul>
               {plans.map((p, i) => (
                 <li key={i}>
-                  {p.friend}: {p.activity} ({p.startTime} - {p.endTime})
+                  {p.friend} - {p.activity}
+                  <br />
+                  {p.date} ({p.startTime} - {p.endTime})
                 </li>
               ))}
             </ul>
@@ -244,10 +264,22 @@ export default function Dashboard() {
 
           {/* Friend Levels */}
           <div className="card">
-            <h3>🧝 Friend Stats</h3>
+            <h3>💕 Relationships</h3>
             {friends.map((f, i) => (
               <div key={i}>
                 {f.name} - Level {f.level} ({f.xp} XP)
+              </div>
+            ))}
+          </div>
+
+          <div className="card">
+            <h3>📅 Calendar</h3>
+
+            {plans.map((p, i) => (
+              <div key={i} style={{ marginBottom: "10px" }}>
+                <strong>{p.date}</strong><br />
+                {p.friend}: {p.activity}<br />
+                {p.startTime} - {p.endTime}
               </div>
             ))}
           </div>
