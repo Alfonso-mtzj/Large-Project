@@ -262,7 +262,7 @@ export default function Dashboard() {
               ]);
 
               setSelectedFriend('');
-              setDate(''):
+              setDate('');
               setActivity('');
               setStartTime('');
               setEndTime('');
