@@ -114,6 +114,7 @@ router.post('/login', async (request, response) => {
         response.json({
             id: user._id,
             email: user.email
+            username: user.username //added line 4/15 10:21am
         });
 
     } catch (e) {
