@@ -6,14 +6,25 @@ import bg from '../assets/auth/dashboard.png';
 export default function Dashboard() {
   const { user } = useAuth();
 
+  //Intelligence
   const [studyHours, setStudyHours] = useState(0);
+
+  //Strength
   const [activityMinutes, setActivityMinutes] = useState(0);
+
+  //Health
   const [meal, setMeal] = useState('');
   const [showCalories, setShowCalories] = useState(false);
   const [calories, setCalories] = useState('');
-  const [plans, setPlans] = useState([]);
-  const [newPlan, setNewPlan] = useState('');
 
+  //Relationship
+  const [newFriend, setNewFriend] = useState('');
+  const [selectedFriend, setSelectedFriend] = useState('');
+  const [activity, setActivity] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+
+  //User
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
 
@@ -115,30 +126,94 @@ export default function Dashboard() {
           </div>
 
           {/* RELATIONSHIPS */}
-          <div className="card">
+         <div className="card">
             <h3>💕 Relationships</h3>
 
+            {/* Friend dropdown */}
+            <select
+              value={selectedFriend}
+              onChange={(e) => setSelectedFriend(e.target.value)}
+            >
+              <option value="">Select Friend</option>
+              {friends.map((f, i) => (
+                <option key={i} value={f.name}>{f.name}</option>
+              ))}
+            </select>
+
+            {/* Activity */}
             <input
               type="text"
-              placeholder="Add plan"
-              value={newPlan}
-              onChange={(e) => setNewPlan(e.target.value)}
+              placeholder="What are you doing?"
+              value={activity}
+              onChange={(e) => setActivity(e.target.value)}
+            />
+
+            {/* Time */}
+            <input
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            />
+
+            <input
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
             />
 
             <button onClick={() => {
-              if (newPlan.trim() === '') return;
-              setPlans([...plans, newPlan]);
-              setNewPlan('');
+              if (!selectedFriend || !activity) return;
+
+              const duration = 1; // later calculate from time
+
+              // give player xp
               gainXp(12);
+
+              // give friend xp
+              const updatedFriends = friends.map(f => {
+                if (f.name === selectedFriend) {
+                  let newXp = f.xp + 10;
+                  let newLevel = f.level;
+
+                  if (newXp >= 50) {
+                    newLevel++;
+                    newXp = newXp - 50;
+                  }
+
+                  return { ...f, xp: newXp, level: newLevel };
+                }
+                return f;
+              });
+
+              setFriends(updatedFriends);
+
+              // save plan
+              setPlans([
+                ...plans,
+                `${selectedFriend}: ${activity} (${startTime}-${endTime})`
+              ]);
+
+              setActivity('');
+              setStartTime('');
+              setEndTime('');
             }}>
-              Add
+              Add Plan
             </button>
 
+            {/* Plans list */}
             <ul>
-              {plans.map((p, i) => (
-                <li key={i}>{p}</li>
-              ))}
+              {plans.map((p, i) => <li key={i}>{p}</li>)}
             </ul>
+          </div>
+
+          {/* Friend Levels */}
+          <div className="card">
+            <h3>🧝 Friend Stats</h3>
+            {friends.map((f, i) => (
+              <div key={i}>
+                {f.name} - Level {f.level}
+              </div>
+            ))}
           </div>
 
         </div>
