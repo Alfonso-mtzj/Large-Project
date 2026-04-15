@@ -27,6 +27,10 @@ export default function Dashboard() {
   const [plans, setPlans] = useState([]);
   const [date, setDate] = useState('');
 
+  //Calendar
+  const [selectedDate, setSelectedDate] = useState('');
+  const filteredPlans = selectedDate ? plans.filter(p => p.date === selectedDate) : plans;
+  
   //User
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
@@ -268,17 +272,6 @@ export default function Dashboard() {
             }}>
               Add Plan
             </button>
-
-            {/* Plans list */}
-            <ul>
-              {plans.map((p, i) => (
-                <li key={i}>
-                  {p.friend} - {p.activity}
-                  <br />
-                  {p.date} ({p.startTime} - {p.endTime})
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Friend Levels */}
@@ -294,15 +287,23 @@ export default function Dashboard() {
           <div className="card">
             <h3>📅 Calendar</h3>
 
-            {plans.map((p, i) => (
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
+
+            {filteredPlans.length === 0 ? (
+              <p>No plans for this day</p>
+            ) : (
+              filteredPlans.map((p, i) => (
               <div key={i} style={{ marginBottom: "10px" }}>
                 <strong>{p.date}</strong><br />
                 {p.friend}: {p.activity}<br />
                 {p.startTime} - {p.endTime}
               </div>
-            ))}
-          </div>
-
+            ))
+          )}
         </div>
       </div>
     </div>
