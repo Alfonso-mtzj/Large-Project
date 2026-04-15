@@ -23,6 +23,8 @@ export default function Dashboard() {
   const [activity, setActivity] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [friends, setFriends] = useState([]);
+  const [plans, setPlans] = useState([]);
 
   //User
   const [xp, setXp] = useState(0);
@@ -35,7 +37,7 @@ export default function Dashboard() {
     let newXp = xp + amount;
 
     if (newXp >= maxXp) {
-      setLevel(level + 1);
+      setLevel(prev => prev + 1);
       newXp = newXp - maxXp;
     }
 
@@ -122,6 +124,31 @@ export default function Dashboard() {
 
             <button onClick={() => gainXp(5)}>
               Log Meal
+            </button>
+          </div>
+
+          {/* Add Friend */}
+          <div className="card">
+            <h3>👥 Add Friend</h3>
+
+            <input
+              type="text"
+              placeholder="Friend's Name"
+              value={newFriend}
+              onChange={(e) => setNewFriend(e.target.value)}
+            />
+
+            <button onClick={() => {
+              if (!newFriend.trim()) return;
+
+              setFriends([
+                ...friends,
+                { name: newFriend, xp: 0, level: 1 }
+              ]);
+
+              setNewFriend('');
+            }}>
+              Add Friend
             </button>
           </div>
 
