@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Verify from './pages/Verify';
+import Calendar from './pages/Calendar';
 
 // NEW imports
 import ForgotPassword from './pages/ForgotPassword';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<Calendar plans={plans} />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
