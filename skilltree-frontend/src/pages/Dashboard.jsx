@@ -115,10 +115,7 @@ export default function Dashboard() {
       </button>
     </div>
 
-    <div
-      className="dashboardBg"
-      style={{ backgroundImage: `url(${bg})` }}
-    >
+    <div className="dashboardBg" style={{ backgroundImage: `url(${bg})` }}>
       <div className="dashboardFrame">
 
         {/* CHARACTER PANEL */}
