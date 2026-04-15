@@ -134,6 +134,36 @@
   align-items: stretch;
 }
 
+/* Nav Bar */
+.navBar {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.navButton {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+
+  background: linear-gradient(145deg, #ffd700, #ffb700);
+  color: black;
+
+  border-radius: 12px;
+  border: none;
+
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+}
+
 input[type="date"] {
   margin-bottom: 10px;
   padding: 6px;
