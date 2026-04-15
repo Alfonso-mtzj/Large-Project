@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import './dashboard.css';
 
-export default function Calendar({ plans }) {
+export default function Calendar() {
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    const savedPlans = localStorage.getItem('plans');
+    if (savedPlans) setPlans(JSON.parse(savedPlans));
+  }, []);
 
   const [selectedDate, setSelectedDate] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
