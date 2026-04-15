@@ -189,7 +189,7 @@ export default function Dashboard() {
             />
 
             <button onClick={() => {
-              if (!selectedFriend || !activity) return;
+              if (!selectedFriend || !activity || !startTime || !endtime) return;
 
               const duration = 1; // later calculate from time
 
@@ -238,7 +238,7 @@ export default function Dashboard() {
             <h3>🧝 Friend Stats</h3>
             {friends.map((f, i) => (
               <div key={i}>
-                {f.name} - Level {f.level}
+                {f.name} - Level {f.level} ({f.xp} XP)
               </div>
             ))}
           </div>
