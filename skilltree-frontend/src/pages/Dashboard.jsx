@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './dashboard.css';
 import bg from '../assets/auth/dashboard.png';
@@ -45,6 +44,24 @@ export default function Dashboard() {
 
     setXp(newXp);
   };
+
+  // LOAD DATA
+  useEffect(() => {
+    const savedFriends = localStorage.getItem('friends');
+    const savedPlans = localStorage.getItem('plans');
+
+    if (savedFriends) setFriends(JSON.parse(savedFriends));
+    if (savedPlans) setPlans(JSON.parse(savedPlans));
+  }, []);
+
+  // SAVE DATA
+  useEffect(() => {
+    localStorage.setItem('friends', JSON.stringify(friends));
+  }, [friends]);
+
+  useEffect(() => {
+    localStorage.setItem('plans', JSON.stringify(plans));
+  }, [plans]);
 
   return (
     <div
@@ -200,32 +217,14 @@ export default function Dashboard() {
             <button onClick={() => {
               console.log({ selectedFriend, activity, startTime, endTime });
       
-              if (!selectedFriend || !activity || !startTime || !endtime) {
+              if (!selectedFriend || !activity || !startTime || !endTime) {
                 alert("You must fill everything out");
                 return;
               }
 
-              //keep friends
-              useEffect(() => {
-                const savedFriends = localStorage.getItem('friends');
-                const savedPlans = localStorage.getItem('plans');
-
-                if (savedFriends) setFriends(JSON.parse(savedFriends));
-                if (savedPlans) setPlans(JSON.parse(savedPlans));
-              }, []);
-
-              useEffect(() => {
-                localStorage.setItem('friends', JSON.stringify(friends));
-              }, [friends]);
-
-              useEffect(() => {
-                localStorage.setItem('plans', JSON.stringify(plans));
-              }, [plans]);
-
               //xp based on time
               const start = new Date(`${date}T${startTime}`);
               const end = new Date(`${date}T${endTime}`);
-
               const durationHours = (end - start) / (1000 * 60 * 60);
 
               // give player xp
@@ -239,7 +238,7 @@ export default function Dashboard() {
 
                   if (newXp >= 50) {
                     newLevel++;
-                    newXp = newXp - 50;
+                    newXp -= 50;
                   }
 
                   return { ...f, xp: newXp, level: newLevel };
