@@ -28,7 +28,7 @@ function App() {
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </AuthProvider>
   );
 }
