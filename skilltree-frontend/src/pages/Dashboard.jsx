@@ -61,9 +61,9 @@ export default function Dashboard() {
   return (
     <>
       {/* NAV */}
-      <div style={{ marginBottom: "20px" }}>
-        <button onClick={() => navigate('/dashboard')}>🧙 Home</button>
-        <button onClick={() => navigate('/calendar')}>📅 Calendar</button>
+      <div style="navBar">
+        <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
+        <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
       </div>
 
       <div className="dashboardBg" style={{ backgroundImage: `url(${bg})` }}>
