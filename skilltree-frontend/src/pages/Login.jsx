@@ -60,7 +60,7 @@ export default function Login() {
             required
           />
 
-          <button className="authSlotBtn" type="submit">Log In</button>
+          <button className="authSlotBtn" type="submit">Login</button>
 
           <div className="authSlotLinks">
             <Link to="/forgot-password">Forgot Password?</Link>
