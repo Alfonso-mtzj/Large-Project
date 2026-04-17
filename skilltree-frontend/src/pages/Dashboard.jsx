@@ -62,14 +62,13 @@ export default function Dashboard() {
     <>
 
       <div className="dashboardBg" style={{ backgroundImage: `url(${bg})` }}>
-        
+
+        <div className="dashboardFrame">
         {/* NAV */}
         <div className="navBar">
           <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
           <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
         </div>
-        
-        <div className="dashboardFrame">
 
           <div className="characterPanel">
             <h2>{user?.email || "Adventurer"}</h2>
