@@ -142,9 +142,12 @@
 /* Nav Bar */
 .navBar {
   display: flex;
-  gap: 10px;
   justify-content: center;
-  margin-bottom: 10px;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 0px;
 
   padding: 10px 20px;
 
@@ -162,6 +165,10 @@
   padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background: linear-gradient(145deg, #ffd700, #ffb700);
   color: black;
