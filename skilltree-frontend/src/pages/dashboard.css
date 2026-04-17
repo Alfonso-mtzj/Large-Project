@@ -12,7 +12,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .dashboardFrame {
@@ -138,9 +138,20 @@
 /* Nav Bar */
 .navBar {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+
+  padding: 10px 20px;
+
+  background: rgba(40, 25, 10, 0.6);
+  backdrop-filter: blur(6px);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 10px rgba(255, 215, 0, 0.2),
+    inset 0 0 6px rbga(255, 215, 0, 0.1);
 }
 
 .navButton {
