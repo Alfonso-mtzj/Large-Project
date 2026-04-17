@@ -2,9 +2,13 @@
   min-height: 100vh;
   background-size: cover;
   background-position: center;
+  
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  padding-top: 10px;
 }
 
 .dashboardBg::before {
@@ -142,7 +146,7 @@
   justify-content: center;
   margin-bottom: 10px;
 
-  padding: 4px 12px;
+  padding: 10px 20px;
 
   background: rgba(40, 25, 10, 0.6);
   backdrop-filter: blur(6px);
@@ -151,7 +155,7 @@
 
   box-shadow:
     0 0 10px rgba(255, 215, 0, 0.2),
-    inset 0 0 6px rbga(255, 215, 0, 0.1);
+    inset 0 0 6px rgba(255, 215, 0, 0.1);
 }
 
 .navButton {
