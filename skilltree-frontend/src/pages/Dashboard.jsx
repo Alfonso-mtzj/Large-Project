@@ -106,7 +106,7 @@ export default function Dashboard() {
                 type="number"
                 placeholder="Hours studied"
                 value={studyHours}
-                onChange={(e) =? setStudyHours(e.target.value)}
+                onChange={(e) => setStudyHours(e.target.value)}
               />
               <button onClick={() => {
                 const hours = Number(studyHours);
