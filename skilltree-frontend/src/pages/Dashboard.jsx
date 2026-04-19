@@ -162,31 +162,30 @@ export default function Dashboard() {
               </label>
 
               {showCalories && (
-                <>
-                  <input
-                    type="number"
-                    placeholder="Calories"
-                    value={calories}
-                    onChange={(e) => setCalories(e.target.value)}
-                  />
-      
-                  <input
-                    type="number"
-                    placeholder="Water (oz)"
-                    value={water}
-                    onChange={(e) => setWater(e.target.value)}
-                  />
-              
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={vitamins}
-                      onChange={() => setVitamins(!vitamins)}
-                    />
-                    Took Vitamins
-                  </label>
-                </>
+                <input
+                  type="number"
+                  placeholder="Calories"
+                  value={calories}
+                  onChange={(e) => setCalories(e.target.value)}
+                 />
               )}
+      
+              <input
+                type="number"
+                placeholder="Water (oz)"
+                value={water}
+                onChange={(e) => setWater(e.target.value)}
+               />
+          
+              <label>
+                <input
+                  type="checkbox"
+                  checked={vitamins}
+                  onChange={() => setVitamins(!vitamins)}
+                />
+                Took Vitamins
+              </label>
+                
 
               <button onClick={() => {
                 let healthXp = 0;
