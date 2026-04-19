@@ -43,11 +43,11 @@ export default function Calendar() {
   const days = getDaysInMonth(currentDate);
 
   return (
-    <div className="dashboardBg">
-      <div className="dashboardFrame">
+    <div className="calendarBg">
+      <div className="calendarContainer">
 
-        <div className="card calendarCard">
-          <h3>📅 Calendar</h3>
+        <div className="calendarCard">
+          <h2>📅 Calendar</h2>
 
           <div className="calendarHeader">
             <button onClick={() => changeMonth(-1)}>◀</button>
@@ -69,9 +69,7 @@ export default function Calendar() {
               return (
                 <div
                   key={i}
-                  className={`calendarCell ${
-                    day === selectedDate ? 'selectedDay' : ''
-                  }`}
+                  className={`calendarCell ${day === selectedDate ? 'selectedDay' : ''}`}
                   onClick={() => setSelectedDate(day)}
                 >
                   {day && (
@@ -92,14 +90,16 @@ export default function Calendar() {
 
           {/* DAY DETAILS */}
           <div className="dayPlans">
-            <h4>{selectedDate || "Select a day"}</h4>
+            <h3>{selectedDate || "Select a day"}</h3>
 
             {plans
               .filter(p => p.date === selectedDate)
               .map((p, i) => (
-                <div key={i}>
-                  {p.friend}: {p.activity}<br />
-                  {p.startTime} - {p.endTime}
+                <div key={i} className="planLog">
+                  <strong>{p.friend}</strong> — {p.activity}<br />
+                  🕒 {p.startTime} - {p.endTime}<br />
+                  🧠 {p.studyHours || 0}h | 💪 {p.activityMinutes || 0}m<br />
+                  🍎 {p.calories || 0} cal
                 </div>
               ))}
           </div>
