@@ -9,14 +9,14 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   //intelligence
-  const [studyHours, setStudyHours] = useState(0);
-  const [activityMinutes, setActivityMinutes] = useState(0);
+  const [studyHours, setStudyHours] = useState('');
+  const [activityMinutes, setActivityMinutes] = useState('');
 
   //health
   const [meal, setMeal] = useState('');
   const [showCalories, setShowCalories] = useState(false);
   const [calories, setCalories] = useState('');
-  const [water, setWater] = useState(0);
+  const [water, setWater] = useState('');
   const [vitamins, setVitamins] = useState(false);
 
   //relationships
@@ -90,7 +90,11 @@ export default function Dashboard() {
         </div>
 
           <div className="characterPanel">
-            <h2>{user?.username || user?.email || "Adventurer"}</h2>
+            <h2>
+              {user?.firstName
+                ?`${user.firstName} ${user.lastName || ''}`
+                : "Adventurer"}
+            </h2>
             <p>Level {level}</p>
 
             <div className="xpBar">
