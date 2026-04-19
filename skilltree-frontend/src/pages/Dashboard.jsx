@@ -125,13 +125,13 @@ export default function Dashboard() {
                 type="number"
                 placeholder="Minutes exercised"
                 value={activityMinutes}
-                onChange{(e) => setActivityMinutes(e.target.value)}
+                onChange={(e) => setActivityMinutes(e.target.value)}
               />
               <button onClick={() => {
                 const mins = Number(activityMinutes);
                 if(!mins) return;
 
-                gainXp(mins)); //1 xp per min
+                gainXp(Math.round(mins/5)); //1 xp per min
                 setActivityMinutes(0);
               }}>
                 Log Workout
@@ -158,41 +158,45 @@ export default function Dashboard() {
               </label>
 
               {showCalories && (
-                <input
-                  type="number"
-                  placeholder="Calories"
-                  value={calories}
-                  onChange={(e) => setCalories(e.target.value)}
-                />
+                <>
+                  <input
+                    type="number"
+                    placeholder="Calories"
+                    value={calories}
+                    onChange={(e) => setCalories(e.target.value)}
+                  />
       
-              //Water and vitamins
-              <input
-                type="number"
-                placeholder="Water (oz)"
-                value={water}
-                onChange={(e) => setWater(e.target.value)}
-              />
+                  <input
+                    type="number"
+                    placeholder="Water (oz)"
+                    value={water}
+                    onChange={(e) => setWater(e.target.value)}
+                  />
               
-              <label>
-                <input
-                  type="checkbox"
-                  checked={vitamins}
-                  onChange{() => setVitamins(!vitamins)}
-                />
-                Took Vitamins
-              </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={vitamins}
+                      onChange{() => setVitamins(!vitamins)}
+                    />
+                    Took Vitamins
+                  </label>
               )}
 
               <button onClick={() => {
                 let healthXp = 0;
 
+                const cal = Number(calories);
+
                 if(cal) healthXp += Math.round(cal / 10);
-                if(water) healthXp += water;
+                if(water) healthXp += Math.round(water / 8);
                 if(vitamins) healthXp += 5;
 
                 gainXp(healthXp);
                 setMeal('');
                 setCalories('');
+                setWater(0);
+                setVitamins(false);
               }}>
                 Log Meal
               </button>
@@ -254,9 +258,23 @@ export default function Dashboard() {
 
                 gainXp(xpEarned);
 
+                setPlans([
+                  ...plans,
+                  {
+                    friend: selectedFriend,
+                    activity,
+                    date,
+                    startTime,
+                    endTime,
+                    studyHours,
+                    activityMinutes,
+                    calories
+                  }
+                ]);
+
                 setFriends(prev =>
                   prev.map(f => {
-                    if (f.name ==== selectedFriend) {
+                    if (f.name === selectedFriend) {
                       const newXp = f.xp + Math.round(durationHours * 10);
                       const newLevel = Math.floor(newXp / 100) + 1;
 
@@ -287,21 +305,6 @@ export default function Dashboard() {
                   {f.name} - Level {f.level} ({f.xp} XP)
                 </div>
               ))}
-            </div>
-
-            <div className="dayPlans">
-              <h4>{selectedDate || "Select a day"}</h4>
-            
-              {plans
-                .filter(p => p.date === selectedDate)
-                .map((p, i) => (
-                  <div key={i} className="planLog">
-                    <strong>{p.friend}</strong> = {p.activity}<br />
-                    🕒 {p.startTime} - {p.endTime}<br />
-                    🧠 {p.studyHours || 0}h | 💪 {p.activityMinutes || 0}m<br />
-                    🍎 {p.calories || 0} cal
-                  </div>
-                ))}
             </div>
 
           </div>
