@@ -181,6 +181,7 @@ export default function Dashboard() {
                     />
                     Took Vitamins
                   </label>
+                </>
               )}
 
               <button onClick={() => {
