@@ -8,13 +8,18 @@ export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  //intelligence
   const [studyHours, setStudyHours] = useState(0);
   const [activityMinutes, setActivityMinutes] = useState(0);
 
+  //health
   const [meal, setMeal] = useState('');
   const [showCalories, setShowCalories] = useState(false);
   const [calories, setCalories] = useState('');
+  const [water, setWater] = useState(0);
+  const [vitamins, setVitamins] = useState(false);
 
+  //relationships
   const [newFriend, setNewFriend] = useState('');
   const [selectedFriend, setSelectedFriend] = useState('');
   const [activity, setActivity] = useState('');
@@ -71,7 +76,7 @@ export default function Dashboard() {
         </div>
 
           <div className="characterPanel">
-            <h2>{user?.email || "Adventurer"}</h2>
+            <h2>{user?.username || user?.email || "Adventurer"}</h2>
             <p>Level {level}</p>
 
             <div className="xpBar">
@@ -83,20 +88,40 @@ export default function Dashboard() {
 
             <div className="card">
               <h3>🧠 Intelligence</h3>
-              <p>{studyHours} hrs</p>
+              <input
+                type="number"
+                placeholder="Hours studied"
+                value={studyHours}
+                onChange={(e) =? setStudyHours(e.target.value)}
+              />
               <button onClick={() => {
-                setStudyHours(studyHours + 1);
-                gainXp(10);
-              }}>+1 Hour</button>
+                const hours = Number(studyHours);
+                if (!hours) return;
+
+                gainXp(hours * 12);
+                setStudyHours(0);
+              }}>
+                Log Study
+              </button>
             </div>
 
             <div className="card">
               <h3>💪 Strength</h3>
-              <p>{activityMinutes} mins</p>
+              <input
+                type="number"
+                placeholder="Minutes exercised"
+                value={activityMinutes}
+                onChange{(e) => setActivityMinutes(e.target.value)}
+              />
               <button onClick={() => {
-                setActivityMinutes(activityMinutes + 10);
-                gainXp(8);
-              }}>+10 min</button>
+                const mins = Number(activityMinutes);
+                if(!mins) return;
+
+                gainXp(mins)); //1 xp per min
+                setActivityMinutes(0);
+              }}>
+                Log Workout
+              </button>
             </div>
 
             <div className="card">
@@ -125,9 +150,38 @@ export default function Dashboard() {
                   value={calories}
                   onChange={(e) => setCalories(e.target.value)}
                 />
+      
+              //Water and vitamins
+              <input
+                type="number"
+                placeholder="Water (oz)"
+                value={water}
+                onChange={(e) => setWater(e.target.value)}
+              />
+              
+              <label>
+                <input
+                  type="checkbox"
+                  checked={vitamins}
+                  onChange{() => setVitamins(!vitamins)}
+                />
+                Took Vitamins
+              </label>
               )}
 
-              <button onClick={() => gainXp(5)}>Log Meal</button>
+              <button onClick={() => {
+                let healthXp = 0;
+
+                if(cal) healthXp += Math.round(cal / 10);
+                if(water) healthXp += water;
+                if(vitamins) healthXp += 5;
+
+                gainXp(healthXp);
+                setMeal('');
+                setCalories('');
+              }}>
+                Log Meal
+              </button>
             </div>
 
             <div className="card">
@@ -173,23 +227,34 @@ export default function Dashboard() {
 
                 const start = new Date(`${date}T${startTime}`);
                 const end = new Date(`${date}T${endTime}`);
-                const durationHours = (end - start) / (1000 * 60 * 60);
 
-                gainXp(Math.round(durationHours * 10));
+                const durationMs = end - start;
 
-                setPlans([
-                  ...plans,
-                  {
-                    friend: selectedFriend,
-                    activity,
-                    date,
-                    startTime,
-                    endTime,
-                    studyHours,
-                    activityMinutes,
-                    calories
-                  }
-                ]);
+                if(durationMs <= 0) {
+                  alert("End time must be after start time");
+                  return;
+                }
+      
+                const durationHours = durationMs / (1000 * 60 * 60);
+                const xpEarned = Math.round(durationHours * 15);
+
+                gainXp(xpEarned);
+
+                setFriends(prev =>
+                  prev.map(f => {
+                    if (f.name ==== selectedFriend) {
+                      const newXp = f.xp + Math.round(durationHours * 10);
+                      const newLevel = Math.floor(newXp / 100) + 1;
+
+                      return {
+                        ...f,
+                        xp: newXp % 100,
+                        level: newLevel
+                      };
+                    }
+                    return f;
+                  })
+                );
 
                 setSelectedFriend('');
                 setDate('');
@@ -208,6 +273,21 @@ export default function Dashboard() {
                   {f.name} - Level {f.level} ({f.xp} XP)
                 </div>
               ))}
+            </div>
+
+            <div className="dayPlans">
+              <h4>{selectedDate || "Select a day"}</h4>
+            
+              {plans
+                .filter(p => p.date === selectedDate)
+                .map((p, i) => (
+                  <div key={i} className="planLog">
+                    <strong>{p.friend}</strong> = {p.activity}<br />
+                    🕒 {p.startTime} - {p.endTime}<br />
+                    🧠 {p.studyHours || 0}h | 💪 {p.activityMinutes || 0}m<br />
+                    🍎 {p.calories || 0} cal
+                  </div>
+                ))}
             </div>
 
           </div>
