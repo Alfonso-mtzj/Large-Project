@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import './calendar.css';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 export default function Calendar() {
   const [plans, setPlans] = useState([]);
@@ -46,6 +48,11 @@ export default function Calendar() {
     <div className="calendarBg">
       <div className="calendarContainer">
 
+        <div className="navBar">
+          <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
+          <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
+        </div>
+        
         <div className="calendarCard">
           <h2>📅 Calendar</h2>
 
