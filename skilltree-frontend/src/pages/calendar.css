@@ -1,11 +1,8 @@
-/* Background (reuse same vibe but cleaner) */
+
 .calendarBg {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #0f172a, #1e293b);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 40px;
+  background: url('/src/assets/calendar_background.png');
+  background-size: cover;
+  background-position: center;
 }
 
 /* Main container */
