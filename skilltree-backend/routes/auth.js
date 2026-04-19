@@ -42,7 +42,7 @@ router.post('/register', async (request, response) => {
         });
 
         // 🔥 Send email via SendGrid
-        const verificationLink = `${process.env.CLIENT_URL}/verify/${tokenVerify}`;
+        const verificationLink = `${process.env.CLIENT_URL}/#/verify/${tokenVerify}`;
 
         await sgMail.send({
             to: email,
@@ -148,7 +148,7 @@ router.post('/forgot-password', async (req, res) => {
         user.resetPasswordExpires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
         await user.save();
 
-        const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+        const resetLink = `${process.env.CLIENT_URL}/#/reset-password/${resetToken}`;
 
         // Send reset email via SendGrid
         await sgMail.send({
