@@ -1,0 +1,105 @@
+/* Background (reuse same vibe but cleaner) */
+.calendarBg {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0f172a, #1e293b);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+}
+
+/* Main container */
+.calendarContainer {
+  width: 90%;
+  max-width: 900px;
+}
+
+/* Calendar card */
+.calendarCard {
+  padding: 20px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.2);
+}
+
+/* Header */
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: white;
+}
+
+/* Grid */
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+/* Each day */
+.calendarCell {
+  height: 60px;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.2s;
+}
+
+.calendarCell:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.selectedDay {
+  outline: 2px solid #38bdf8;
+}
+
+/* Day number */
+.dayNumber {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 13px;
+  color: white;
+}
+
+/* Dot if event exists */
+.eventDot {
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ===== LOG SECTION ===== */
+.dayPlans {
+  margin-top: 20px;
+}
+
+/* Each log entry */
+.planLog {
+  margin-top: 10px;
+  padding: 12px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+
+  color: white;
+  font-size: 14px;
+
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
+}
