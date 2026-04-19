@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './dashboard.css';
+import './calendar.css';
 
 export default function Calendar() {
   const [plans, setPlans] = useState([]);
