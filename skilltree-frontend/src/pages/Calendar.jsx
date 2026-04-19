@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './calendar.css';
+import bg from '../assets/auth/calendar_background.png';
 import { useNavigate } from 'react-router-dom';
 const navigate = useNavigate();
 
