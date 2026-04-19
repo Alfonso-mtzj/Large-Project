@@ -155,6 +155,7 @@ router.post('/forgot-password', async (req, res) => {
         await user.save();
 
         const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+        const appLink = `skilltree://reset-password/${resetToken}`;
 
         // Send reset email via SendGrid
         await sgMail.send({
@@ -174,6 +175,12 @@ router.post('/forgot-password', async (req, res) => {
                     <p style="margin-top:20px; font-size:12px; color:#666;">
                       This link expires in 1 hour.
                     </p>
+                    <hr style="margin-top:30px;"/>
+                    <p style="margin-top:20px;">If you're using the mobile app, click this link!</p>
+                    <a href="${appLink}"
+                       style="padding:10px 20px; background:#2196F3; color:white; text-decoration:none; border-radius:5px;">
+                       Reset in App
+                    </a>
                 </div>
             `
         }).catch(err => console.error("SendGrid error:", err));
