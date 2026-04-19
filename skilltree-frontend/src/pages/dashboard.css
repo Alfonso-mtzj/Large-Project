@@ -129,8 +129,8 @@
 
 .xpFill {
   height: 100%;
-  background: gold;
-  box-shadow: 0 0 10px gold;
+  background: linear-gradient(90deg, #00ffcc, #00ccff;
+  box-shadow: 0 0 12px #00ccff;
 }
 
 .statsPanel {
@@ -172,7 +172,7 @@
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(145deg, #ffd700, #ffb700);
+  background: linear-gradient(145deg, #7dd3fc, #60a5fa);
   color: black;
 
   border-radius: 12px;
@@ -188,6 +188,13 @@
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
 }
+
+.planLog {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
 
 input[type="date"] {
   margin-bottom: 10px;
