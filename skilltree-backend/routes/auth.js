@@ -113,8 +113,8 @@ router.post('/login', async (request, response) => {
 
         response.json({
             id: user._id,
-            email: user.email
-            username: user.username //added line 4/15 10:21am
+            email: user.email,
+            username: user.username
         });
 
     } catch (e) {
@@ -129,7 +129,7 @@ router.post('/forgot-password', async (req, res) => {
 
     try {
         // Always respond with success message (security best practice)
-        const genericMsg = "If that email exists, a password reset link has been sent.";
+        const genericMsg = "If that email exists, a password reset token has been sent.";
 
         if (!email) {
             return res.status(400).json({ error: "Email is required" });
@@ -142,12 +142,6 @@ router.post('/forgot-password', async (req, res) => {
             return res.status(200).json({ message: genericMsg });
         }
 
-        // Optional: you can require verification before allowing reset
-        // If you want that, uncomment:
-        // if (!user.isVerified) {
-        //   return res.status(200).json({ message: genericMsg });
-        // }
-
         const resetToken = crypto.randomBytes(20).toString('hex');
 
         user.resetPasswordToken = resetToken;
@@ -155,32 +149,29 @@ router.post('/forgot-password', async (req, res) => {
         await user.save();
 
         const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-        const appLink = `skilltree://reset-password/${resetToken}`;
 
         // Send reset email via SendGrid
         await sgMail.send({
             to: email,
-            from: process.env.SMTP_USER, // MUST be verified in SendGrid
+            from: process.env.SMTP_USER,
             subject: "Reset your SkillTree password",
             html: `
                 <div style="text-align:center; font-family: Arial;">
                     <h2>Password Reset Request</h2>
-                    <p>Click the button below to reset your password:</p>
+                    <p>Click the button below to reset your password on the website:</p>
                     <a href="${resetLink}" 
                        style="padding:10px 20px; background:#4CAF50; color:white; text-decoration:none; border-radius:5px;">
                        Reset Password
                     </a>
                     <p style="margin-top:20px;">Or copy this link:</p>
                     <p>${resetLink}</p>
-                    <p style="margin-top:20px; font-size:12px; color:#666;">
-                      This link expires in 1 hour.
-                    </p>
                     <hr style="margin-top:30px;"/>
-                    <p style="margin-top:20px;">If you're using the mobile app, click this link!</p>
-                    <a href="${appLink}"
-                       style="padding:10px 20px; background:#2196F3; color:white; text-decoration:none; border-radius:5px;">
-                       Reset in App
-                    </a>
+                    <p style="margin-top:20px;"><strong>Using the mobile app?</strong></p>
+                    <p>Copy the token below and paste it into the app:</p>
+                    <p style="font-size:18px; font-weight:bold; letter-spacing:2px; background:#f4f4f4; padding:10px; border-radius:5px; color:#333;">${resetToken}</p>
+                    <p style="margin-top:20px; font-size:12px; color:#666;">
+                      This token expires in 1 hour.
+                    </p>
                 </div>
             `
         }).catch(err => console.error("SendGrid error:", err));
