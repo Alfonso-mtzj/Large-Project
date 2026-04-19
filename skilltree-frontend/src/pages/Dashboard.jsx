@@ -220,6 +220,9 @@ export default function Dashboard() {
               <button onClick={() => {
                 if (!newFriend.trim()) return;
 
+                const formattedName =
+                  newFriend.charAt(0).toUpperCase() + newFriend.slice(1).toLowerCase();
+      
                 setFriends([...friends, { name: newFriend, xp: 0, level: 1 }]);
                 setNewFriend('');
               }}>
