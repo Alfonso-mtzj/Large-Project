@@ -177,7 +177,7 @@ export default function Dashboard() {
                     <input
                       type="checkbox"
                       checked={vitamins}
-                      onChange{() => setVitamins(!vitamins)}
+                      onChange={() => setVitamins(!vitamins)}
                     />
                     Took Vitamins
                   </label>
