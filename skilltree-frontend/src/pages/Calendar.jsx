@@ -45,7 +45,7 @@ export default function Calendar() {
   const days = getDaysInMonth(currentDate);
 
   return (
-    <div className="calendarBg">
+    <div className="calendarBg" style={{ backgroundImage: `url(${bg})` }}>
       <div className="calendarContainer">
 
         <div className="navBar">
