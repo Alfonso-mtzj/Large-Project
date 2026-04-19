@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import './calendar.css';
 import bg from '../assets/auth/calendar_background.png';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 export default function Calendar() {
+  const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Calendar() {
     }
 
     for (let d = 1; d <= lastDay.getDate(); d++) {
-      const fullDate = new Date(year, month, d);
+      const fullDate = te(year, month, d);
       const formatted = fullDate.toISOString().split('T')[0];
       days.push(formatted);
     }
@@ -38,7 +38,7 @@ export default function Calendar() {
   };
 
   const changeMonth = (offset) => {
-    const newDate = new Date(currentDate);
+    const newDate = te(currentDate);
     newDate.setMonth(newDate.getMonth() + offset);
     setCurrentDate(newDate);
   };
@@ -83,7 +83,7 @@ export default function Calendar() {
                   {day && (
                     <>
                       <div className="dayNumber">
-                        {new Date(day).getDate()}
+                        {te(day).getDate()}
                       </div>
 
                       {dayPlans.length > 0 && (
@@ -99,7 +99,7 @@ export default function Calendar() {
           {/* DAY DETAILS */}
           <div className="dayPlans">
             <h3>{selectedDate
-              ? new Date(selectedDate).toLocalDateString()
+              ? new Date(selectedDate).toLocaleDateString()
               : "Select a day"}
             </h3>
 
