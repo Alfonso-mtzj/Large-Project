@@ -97,7 +97,10 @@ export default function Calendar() {
 
           {/* DAY DETAILS */}
           <div className="dayPlans">
-            <h3>{selectedDate || "Select a day"}</h3>
+            <h3>{selectedDate
+              ? new Date(selectedDate).toLocalDateString()
+              : "Select a day"}
+            </h3>
 
             {plans
               .filter(p => p.date === selectedDate)
