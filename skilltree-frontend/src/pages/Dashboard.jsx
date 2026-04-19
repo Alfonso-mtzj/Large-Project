@@ -63,6 +63,20 @@ export default function Dashboard() {
     localStorage.setItem('plans', JSON.stringify(plans));
   }, [plans]);
 
+  useEffect(() => {
+    const savedXp = localStorage.getItem('xp');
+    const savedLevel = localStorage.getItem('level');
+
+    if(savedXp) setXp(Number(savedXp));
+    if(savedLevel) setLevel(Number(savedLevel));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('xp', xp);
+    localStorage.setItem('level', level);
+  }, [xp, level]);
+                                        
+
   return (
     <>
 
