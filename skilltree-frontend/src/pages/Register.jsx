@@ -109,6 +109,20 @@ export default function Register() {
             required
           />
 
+          {showRules && (
+            <div className="passwordPopup">
+              <p style={{ color: passwordRules.length ? 'lightgreen' : 'red' }}>
+                • 8+ characters
+              </p>
+              <p style={{ color: passwordRules.number ? 'lightgreen' : 'red' }}>
+                • Contains a number
+              </p>
+              <p style={{ color: passwordRules.special ? 'lightgreen' : 'red' }}>
+                • Special character
+              </p>
+            </div>
+          )}
+
           <label className="authSlotLabel"></label>
           <input
             className="authSlotInput"
