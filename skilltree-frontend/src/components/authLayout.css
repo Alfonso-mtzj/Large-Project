@@ -447,7 +447,7 @@ html, body, #root {
    position: fixed;
    top: 120px;
    left: 50%;
-   transform: translate(-50px);
+   transform: translate(-50%);
    padding: 15px 25px;
    border-radius: 12px;
 
