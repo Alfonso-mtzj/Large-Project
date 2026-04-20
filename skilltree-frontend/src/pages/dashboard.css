@@ -38,6 +38,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  text-align: center;
 
   min-height: 220px;
 
@@ -72,14 +73,15 @@
   border-radius: 8px;
   padding: 6px;
 
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .card label {
   width: 80%;
   display: flex;
   align-items: center;
-  padding-left: 10%;
+  padding-left: 0;
+  justify-content: flex-start;
   gap: 5px;
 }
 
@@ -97,7 +99,13 @@
 
 .card select {
   width: 70%;
+  margin-bottom: 15px;
   margin: 0 auto;
+}
+
+.characterDate {
+  margin-top: 10px;
+  color: #e8f5e9;
 }
 
 .characterPanel {
