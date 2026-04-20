@@ -92,9 +92,9 @@ export default function Dashboard() {
 
           <div className="characterPanel">
             <h2>
-                  {user
-                    ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || "Adventurer"
-                    : "Adventurer"}
+              {user === null
+                ? "Loading..."
+                : `${user.firstName || ''} ${user.lastName || ''}`.trim() || "Adventurer"}
             </h2>
             
             <p>Level {level}</p>
