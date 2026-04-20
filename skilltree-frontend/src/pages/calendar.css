@@ -108,3 +108,8 @@
 
   box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
 }
+
+.today {
+  outline: 2px solid gold;
+  background: rgba(255, 215, 0, 0.2);
+}
