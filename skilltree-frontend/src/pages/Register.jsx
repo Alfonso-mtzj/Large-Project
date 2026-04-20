@@ -24,7 +24,7 @@ export default function Register() {
     setPasswordRules({
       length: value.length >= 8,
       number: /\d/.test(value),
-      special: /[!@#$%^&*}/.test(value)
+      special: /[!@#$%^&*]/.test(value)
     });
   };
   const [fullName, setFullName] = useState('');
