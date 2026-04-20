@@ -109,6 +109,8 @@ export default function Dashboard() {
             <div className="xpBar">
               <div className="xpFill" style={{ width: `${xpPercent}%` }} />
             </div>
+
+            <p>{new Date().toLocaleDateString()}</p>
           </div>
 
           <div className="statsPanel">
