@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import './calendar.css';
 import bg from '../assets/auth/calendar_background.png';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Calendar() {
   const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
+  const { logout } = useAuth();
 
   useEffect(() => {
     const savedPlans = localStorage.getItem('plans');
@@ -52,6 +54,12 @@ export default function Calendar() {
         <div className="navBar">
           <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
           <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
+          <button className="navButton" onClick={() => {
+            logout();
+            navigate('/login');
+          }}>
+            🚪 Logout
+          </button>
         </div>
         
         <div className="calendarCard">
