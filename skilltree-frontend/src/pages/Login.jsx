@@ -19,7 +19,11 @@ export default function Login() {
     try {
       const { data } = await loginUser(form);
       login(data, null);
-      navigate('/dashboard');
+
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 50);
+      
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }
