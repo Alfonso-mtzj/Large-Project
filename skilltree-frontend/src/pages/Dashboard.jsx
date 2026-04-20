@@ -205,6 +205,20 @@ export default function Dashboard() {
                 if(water) healthXp += Math.round(water / 8);
                 if(vitamins) healthXp += 5;
 
+                //adding it as a plan
+                const today = new Date().toISOString().split('T')[0];
+
+                setPlans([
+                  ...plans,
+                  {
+                    date: today,
+                    calories,
+                    water,
+                    vitamins,
+                    type: 'health'
+                  }
+                ]);
+      
                 gainXp(healthXp);
                 setMeal('');
                 setCalories('');
