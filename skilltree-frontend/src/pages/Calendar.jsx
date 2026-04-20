@@ -98,9 +98,12 @@ export default function Calendar() {
                         {new Date(day).getDate()}
                       </div>
 
-                      {dayPlans.length > 0 && (
-                        <div className="eventDot"></div>
-                      )}
+                      <div className="dots">
+                        {dayPlans.some(p => p.studyHours) && <div className="dot blue"></div>}
+                        {dayPlans.some(p => p.activityMinutes) && <div className="dot purple"></div>}
+                        {dayPlans.some(p => p.calories || p.water) && <div className="dot red"></div>}
+                        {dayPlans.some(p => p.friend) && <div className="dot pink"></div>}
+                      </div>
                     </>
                   )}
                 </div>
