@@ -30,6 +30,7 @@ export default function Dashboard() {
 
   const [friends, setFriends] = useState([]);
   const [plans, setPlans] = useState([]);
+  const today = new Date().toISOString().split('T')[0];
 
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
@@ -127,7 +128,16 @@ export default function Dashboard() {
                 if (!hours) return;
 
                 gainXp(hours * 12);
-                setStudyHours(0);
+
+                setPlans([
+                  ...plans,
+                  {
+                    date: today,
+                    studyHours: hours,
+                    type: 'intelligence'
+                  }
+                ]);
+                setStudyHours('');
               }}>
                 Log Study
               </button>
@@ -146,6 +156,16 @@ export default function Dashboard() {
                 if(!mins) return;
 
                 gainXp(Math.round(mins/5)); //1 xp per min
+
+                setPlans([
+                  ...plans,
+                  {
+                    date: today,
+                    activityMinutes: mins,
+                    type: 'strength'
+                  }
+                ]);
+      
                 setActivityMinutes(0);
               }}>
                 Log Workout
@@ -213,6 +233,7 @@ export default function Dashboard() {
                   ...plans,
                   {
                     date: today,
+                    meal,
                     calories,
                     water,
                     vitamins,
