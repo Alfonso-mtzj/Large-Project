@@ -184,7 +184,7 @@ export default function Dashboard() {
                 type="number"
                 placeholder="Water (oz)"
                 value={water}
-                onChange={(e) => setWater(e.target.value)}
+                onChange={(e) => (e.target.value)}
                />
           
               <label>
@@ -223,7 +223,7 @@ export default function Dashboard() {
                 gainXp(healthXp);
                 setMeal('');
                 setCalories('');
-                setWater(0);
+                setWater('');
                 setVitamins(false);
               }}>
                 Log Meal
