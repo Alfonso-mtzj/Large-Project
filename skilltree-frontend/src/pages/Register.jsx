@@ -17,7 +17,7 @@ export default function Register() {
     number: false,
     special: false
   });
-  const hnadlePasswordChange = (e) => {
+  const handlePasswordChange = (e) => {
     const value = e.target.value;
 
     setForm({ ...form, password: value });
