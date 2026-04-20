@@ -105,7 +105,7 @@ export default function Register() {
             value={form.password}
             onChange={handlePasswordChange}
             onFocus={() => setShowRules(true)}
-            onBlur={() -> setShowRules(false)}
+            onBlur={() => setShowRules(false)}
             required
           />
 
