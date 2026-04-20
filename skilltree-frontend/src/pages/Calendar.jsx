@@ -8,6 +8,7 @@ export default function Calendar() {
   const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
   const { logout } = useAuth();
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     const savedPlans = localStorage.getItem('plans');
@@ -85,7 +86,10 @@ export default function Calendar() {
               return (
                 <div
                   key={i}
-                  className={`calendarCell ${day === selectedDate ? 'selectedDay' : ''}`}
+                  className={`calendarCell
+                    ${day === selectedDate ? 'selectedDay' : ''}
+                    ${day === today ? 'today' : ''}
+                  `}
                   onClick={() => setSelectedDate(day)}
                 >
                   {day && (
