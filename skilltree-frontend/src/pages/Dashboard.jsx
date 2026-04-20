@@ -12,7 +12,10 @@ export default function Dashboard() {
   //intelligence
   const [studyHours, setStudyHours] = useState('');
   const [studyMinutes, setStudyMinutes] = useState('');
+
+  //Strength
   const [activityMinutes, setActivityMinutes] = useState('');
+  const [workout, setWorkout] = useState('');
 
   //health
   const [meal, setMeal] = useState('');
@@ -142,11 +145,12 @@ export default function Dashboard() {
                   ...plans,
                   {
                     date: today,
-                    studyHours: hours,
+                    studyHours: totalHours,
                     type: 'intelligence'
                   }
                 ]);
                 setStudyHours('');
+                setStudyMinutes('');
               }}>
                 Log Study
               </button>
@@ -154,6 +158,12 @@ export default function Dashboard() {
 
             <div className="card">
               <h3>💪 Strength</h3>
+              <input
+                type="text"
+                placeholder="What did you do?"
+                value={workout}
+                onChange={(e) => setWorkout(e.target.value)}
+              />
               <input
                 type="number"
                 placeholder="Minutes exercised"
@@ -170,12 +180,14 @@ export default function Dashboard() {
                   ...plans,
                   {
                     date: today,
+                    workout,
                     activityMinutes: mins,
                     type: 'strength'
                   }
                 ]);
       
-                setActivityMinutes(0);
+                setActivityMinutes('');
+                setWorkout('');
               }}>
                 Log Workout
               </button>
@@ -213,7 +225,7 @@ export default function Dashboard() {
                 type="number"
                 placeholder="Water (oz)"
                 value={water}
-                onChange={(e) => (e.target.value)}
+                onChange={(e) => setWater(e.target.value)}
                />
           
               <label>
@@ -255,6 +267,7 @@ export default function Dashboard() {
                 setCalories('');
                 setWater('');
                 setVitamins(false);
+                setShowCalories(false);
               }}>
                 Log Meal
               </button>
