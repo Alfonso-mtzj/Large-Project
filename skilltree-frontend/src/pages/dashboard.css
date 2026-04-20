@@ -82,6 +82,8 @@
   align-items: center;
   padding-left: 0;
   justify-content: flex-start;
+  text-align: left;
+  margin-left: 10%;
   gap: 5px;
 }
 
@@ -98,14 +100,15 @@
 }
 
 .card select {
-  width: 70%;
-  margin-bottom: 15px;
+  width: 80%;
+  margin-bottom: 18px;
   margin: 0 auto;
 }
 
 .characterDate {
-  margin-top: 10px;
+  margin-top: 20px;
   color: #e8f5e9;
+  background: linear-gradient(145deg, #6fa87a, #4f7c5a);
 }
 
 .characterPanel {
