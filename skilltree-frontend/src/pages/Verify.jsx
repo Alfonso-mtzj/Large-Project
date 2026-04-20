@@ -56,4 +56,4 @@ export default function Verify() {
       )}
     </div>
   </div>
-);
+);}
