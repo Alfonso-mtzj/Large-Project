@@ -30,6 +30,7 @@ export default function Register() {
   const [fullName, setFullName] = useState('');
   const [error, setError]       = useState('');
   const [success, setSuccess]   = useState('');
+  const [showRules, setShowRules] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -103,9 +104,11 @@ export default function Register() {
             name="password"
             type="password"
             value={form.password}
-            onChange={handlePasswordChange}
             onFocus={() => setShowRules(true)}
-            onBlur={() => setShowRules(false)}
+            onChange={(e) => {
+              handlePasswordChange(e);
+              setShowRules(true);
+            }}
             required
           />
 
@@ -139,19 +142,6 @@ export default function Register() {
           <div className="authSlotLinks">
             <Link to="/login">Login</Link>
           </div>
-
-          <div className="passwordRules">
-            <p style={{ color: passwordRules.length ? 'lightgreen' : 'red' }}>
-              • 8+ characters
-            </p>
-            <p style={{ color: passwordRules.number ? 'lightgreen' : 'red' }}>
-              • Contains a number
-            </p>
-            <p style={{ color: passwordRules.special ? 'lightgreen' : 'red' }}>
-              • Special character
-            </p>
-          </div>
-
         </form>
       </AuthLayout>
     </>
