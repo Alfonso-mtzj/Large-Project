@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  console.log("USER IN DASHBOARD:", user);
 
   //intelligence
   const [studyHours, setStudyHours] = useState('');
