@@ -122,10 +122,21 @@ export default function Calendar() {
               .filter(p => p.date === selectedDate)
               .map((p, i) => (
                 <div key={i} className="planLog">
-                  <strong>{p.friend}</strong> — {p.activity}<br />
-                  🕒 {p.startTime} - {p.endTime}<br />
-                  🧠 {p.studyHours || 0}h | 💪 {p.activityMinutes || 0}m<br />
-                  🍎 {p.calories || 0} cal
+                  {p.type === 'health' ? (
+                    <>
+                      🍎 Health Log<br />
+                      💧 {p.water || 0} oz<br />
+                      🔥 {p.calories || 0} cal<br />
+                      💊 {p.vitamins ? "Vitamins taken" : "No vitamins"}
+                    </>
+                  ) : (
+                    <>
+                      <strong>{p.friend}</strong> — {p.activity}<br />
+                      🕒 {p.startTime} - {p.endTime}<br />
+                      🧠 {p.studyHours || 0}h | 💪 {p.activityMinutes || 0}m<br />
+                      🍎 {p.calories || 0} cal
+                    </>
+                  )}
                 </div>
               ))}
           </div>
