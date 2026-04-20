@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   console.log("USER IN DASHBOARD:", user);
 
@@ -88,6 +89,12 @@ export default function Dashboard() {
         <div className="navBar">
           <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
           <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
+          <button className="navButton" onClick={() => {
+            logout();
+            navigate('/login');
+          }}>
+            🚪 Logout
+          </button>
         </div>
 
           <div className="characterPanel">
