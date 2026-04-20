@@ -76,17 +76,25 @@
 }
 
 /* Dot if event exists */
-.eventDot {
-  width: 8px;
-  height: 8px;
-  background: #38bdf8;
-  border-radius: 50%;
-
+.dots {
   position: absolute;
-  bottom: 8px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
 }
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.blue { background: #3b82f6; }
+.red { background: #ef4444; }
+.purple { background: #8b5cf6; }
+.pink { background: #ec4899; }
 
 /* ===== LOG SECTION ===== */
 .dayPlans {
