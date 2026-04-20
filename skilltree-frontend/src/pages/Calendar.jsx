@@ -29,7 +29,7 @@ export default function Calendar() {
     }
 
     for (let d = 1; d <= lastDay.getDate(); d++) {
-      const fullDate = te(year, month, d);
+      const fullDate = new Date(year, month, d);
       const formatted = fullDate.toISOString().split('T')[0];
       days.push(formatted);
     }
@@ -38,7 +38,7 @@ export default function Calendar() {
   };
 
   const changeMonth = (offset) => {
-    const newDate = te(currentDate);
+    const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + offset);
     setCurrentDate(newDate);
   };
@@ -83,7 +83,7 @@ export default function Calendar() {
                   {day && (
                     <>
                       <div className="dayNumber">
-                        {te(day).getDate()}
+                        {new Date(day).getDate()}
                       </div>
 
                       {dayPlans.length > 0 && (
