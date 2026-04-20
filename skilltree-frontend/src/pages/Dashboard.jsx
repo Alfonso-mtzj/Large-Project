@@ -11,6 +11,7 @@ export default function Dashboard() {
 
   //intelligence
   const [studyHours, setStudyHours] = useState('');
+  const [studyMinutes, setStudyMinutes] = useState('');
   const [activityMinutes, setActivityMinutes] = useState('');
 
   //health
@@ -121,15 +122,21 @@ export default function Dashboard() {
               <h3>🧠 Intelligence</h3>
               <input
                 type="number"
-                placeholder="Hours studied"
+                placeholder="Hours"
                 value={studyHours}
                 onChange={(e) => setStudyHours(e.target.value)}
               />
+              <input
+                type="number"
+                placeholder="Minutes"
+                value={studyMinutes}
+                onChange{(e) => setStudyMinutes(e.target.value)}
+              />
               <button onClick={() => {
-                const hours = Number(studyHours);
-                if (!hours) return;
+                const totalHours = Number(studyHours) + (Number(studyMinutes) / 60);
+                if (!totalHours) return;
 
-                gainXp(hours * 12);
+                gainXp(totalHours * 12);
 
                 setPlans([
                   ...plans,
