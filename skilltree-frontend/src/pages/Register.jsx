@@ -12,6 +12,21 @@ export default function Register() {
     email: '',
     password: '',
   });
+  const [passwordRules, setPasswordRules] = useState({
+    length: false,
+    number: false,
+    special: false
+  });
+  const hnadlePasswordChange = (e) => {
+    const value = e.target.value;
+
+    setForm({ ...form, password: value });
+    setPasswordRules({
+      length: value.length >= 8,
+      number: /\d/.test(value),
+      special: /[!@#$%^&*}/.test(value)
+    });
+  };
   const [fullName, setFullName] = useState('');
   const [error, setError]       = useState('');
   const [success, setSuccess]   = useState('');
@@ -60,7 +75,7 @@ export default function Register() {
           <input
             className="authSlotInput"
             name="fullName"
-            type="text"
+            type="type"
             autoComplete="name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
@@ -83,9 +98,8 @@ export default function Register() {
             className="authSlotInput"
             name="password"
             type="password"
-            autoComplete="new-password"
             value={form.password}
-            onChange={handleChange}
+            onChange={handlePasswordChange}
             required
           />
 
@@ -104,6 +118,18 @@ export default function Register() {
 
           <div className="authSlotLinks">
             <Link to="/login">Login</Link>
+          </div>
+
+          <div className="passwordRules">
+            <p style={{ color: passwordRules.length ? 'lightgreen' : 'red' }}>
+              • 8+ characters
+            </p>
+            <p style={{ color: passwordRules.number ? 'lightgreen' : 'red' }}>
+              • Contains a number
+            </p>
+            <p style={{ color: passwordRules.special ? 'lightgreen' : 'red' }}>
+              • Special character
+            </p>
           </div>
 
         </form>
