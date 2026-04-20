@@ -110,7 +110,9 @@ export default function Dashboard() {
               <div className="xpFill" style={{ width: `${xpPercent}%` }} />
             </div>
 
-            <p>{new Date().toLocaleDateString()}</p>
+            <p className="characterDate">
+              {new Date().toLocaleDateString()}
+            </p>
           </div>
 
           <div className="statsPanel">
