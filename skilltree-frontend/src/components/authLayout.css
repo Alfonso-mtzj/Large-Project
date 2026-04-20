@@ -445,7 +445,7 @@ html, body, #root {
 
 .passwordPopup {
    position: absolute;
-   top: 87%;
+   top: 92%;
    left: 50%;
    transform: translateX(-50%);
    background: rgba(0, 0, 0, 0.7);
