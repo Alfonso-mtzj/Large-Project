@@ -91,10 +91,8 @@ export default function Dashboard() {
 
           <div className="characterPanel">
             <h2>
-                {user?.firstName
-                  ? `${user.firstName} ${user.lastName || ''}`
-                  : user?.fullName
-                    ? user.fullName
+                  {user
+                    ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || "Adventurer"
                     : "Adventurer"}
             </h2>
             
