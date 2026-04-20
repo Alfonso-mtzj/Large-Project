@@ -18,7 +18,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? success;
   bool loading = false;
 
+  String? _validatePassword(String password) {
+    if (password.length < 8) return 'Password must be at least 8 characters';
+    if (!password.contains(RegExp(r'[A-Z]'))) return 'Password must contain at least 1 uppercase letter';
+    if (!password.contains(RegExp(r'[0-9]'))) return 'Password must contain at least 1 number';
+    if (!password.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) return 'Password must contain at least 1 special character';
+    return null;
+  }
+
   void _register() async {
+    // Validate password before hitting the API
+    final passwordError = _validatePassword(passwordController.text);
+    if (passwordError != null) {
+      setState(() => error = passwordError);
+      return;
+    }
+
     setState(() {
       error = null;
       success = null;
@@ -57,15 +72,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background — same as dashboard
           SizedBox.expand(
-            child: Image.asset(
-              'assets/dashboard.png',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset('assets/dashboard.png', fit: BoxFit.cover),
           ),
-
-          // Register card
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -89,7 +98,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Title
                     Text(
                       "Join SkillTree",
                       style: GoogleFonts.cinzelDecorative(
@@ -117,67 +125,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 28),
 
-                    // Full Name
-                    _Field(
-                      controller: nameController,
-                      label: "Full Name",
-                      keyboardType: TextInputType.name,
-                    ),
+                    _Field(controller: nameController, label: "Full Name", keyboardType: TextInputType.name),
                     const SizedBox(height: 14),
-
-                    // Username
-                    _Field(
-                      controller: usernameController,
-                      label: "Username",
-                    ),
+                    _Field(controller: usernameController, label: "Username"),
                     const SizedBox(height: 14),
-
-                    // Email
-                    _Field(
-                      controller: emailController,
-                      label: "Email",
-                      keyboardType: TextInputType.emailAddress,
-                    ),
+                    _Field(controller: emailController, label: "Email", keyboardType: TextInputType.emailAddress),
                     const SizedBox(height: 14),
+                    _Field(controller: passwordController, label: "Password", isPassword: true),
 
-                    // Password
-                    _Field(
-                      controller: passwordController,
-                      label: "Password",
-                      isPassword: true,
+                    // Password requirements hint
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        "Min 8 chars • 1 uppercase • 1 number • 1 special character",
+                        style: GoogleFonts.cinzel(
+                          fontSize: 10,
+                          color: const Color(0xFFF5E8B0).withOpacity(0.4),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
 
-                    // Error message
                     if (error != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
-                        child: Text(
-                          error!,
-                          style: const TextStyle(
-                            color: Color(0xFF8B0000),
-                            fontSize: 13,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text(error!,
+                            style: const TextStyle(color: Color(0xFF8B0000), fontSize: 13),
+                            textAlign: TextAlign.center),
                       ),
 
-                    // Success message
                     if (success != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
-                        child: Text(
-                          success!,
-                          style: const TextStyle(
-                            color: Colors.greenAccent,
-                            fontSize: 13,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text(success!,
+                            style: const TextStyle(color: Colors.greenAccent, fontSize: 13),
+                            textAlign: TextAlign.center),
                       ),
 
                     const SizedBox(height: 24),
 
-                    // Register button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -185,43 +171,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           backgroundColor: const Color(0xFF4CAF50),
                           foregroundColor: Colors.white,
                           minimumSize: const Size.fromHeight(48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          textStyle: GoogleFonts.cinzelDecorative(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          textStyle: GoogleFonts.cinzelDecorative(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         onPressed: loading ? null : _register,
                         child: loading
-                            ? const SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
+                            ? const SizedBox(width: 24, height: 24,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                             : const Text("Register"),
                       ),
                     ),
 
                     const SizedBox(height: 12),
 
-                    // Back to Login
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-                      },
-                      child: Text(
-                        "Back to Login",
-                        style: GoogleFonts.cinzel(
-                          color: const Color(0xFFF5E8B0),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12,
-                        ),
-                      ),
+                      onPressed: () => Navigator.pushNamed(context, '/login'),
+                      child: Text("Back to Login",
+                          style: GoogleFonts.cinzel(
+                              color: const Color(0xFFF5E8B0),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12)),
                     ),
                   ],
                 ),
@@ -270,22 +239,15 @@ class _Field extends StatelessWidget {
         fillColor: Colors.white.withOpacity(0.07),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: const Color(0xFFF5E8B0).withOpacity(0.2),
-          ),
+          borderSide: BorderSide(color: const Color(0xFFF5E8B0).withOpacity(0.2)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: const Color(0xFFF5E8B0).withOpacity(0.2),
-          ),
+          borderSide: BorderSide(color: const Color(0xFFF5E8B0).withOpacity(0.2)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFFF5E8B0),
-            width: 1.5,
-          ),
+          borderSide: const BorderSide(color: Color(0xFFF5E8B0), width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       ),
