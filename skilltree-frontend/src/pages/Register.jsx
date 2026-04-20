@@ -60,7 +60,11 @@ export default function Register() {
   return (
     <>
       {error   && <div className="authErrorToast">{error}</div>}
-      {success && <div className="authErrorToast" style={{ color: '#c8ffd8' }}>{success}</div>}
+      {success && (
+        <div className="successBox">
+          {success}
+        </div>
+      )}
 
       <AuthLayout
         frameSrc={registerFrame}
