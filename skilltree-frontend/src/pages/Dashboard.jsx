@@ -222,7 +222,7 @@ export default function Dashboard() {
                 const formattedName =
                   newFriend.charAt(0).toUpperCase() + newFriend.slice(1).toLowerCase();
       
-                setFriends([...friends, { name: newFriend, xp: 0, level: 1 }]);
+                setFriends([...friends, { name: formattedName, xp: 0, level: 1 }]);
                 setNewFriend('');
               }}>
                 Add Friend
