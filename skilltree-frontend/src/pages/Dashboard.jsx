@@ -91,10 +91,13 @@ export default function Dashboard() {
 
           <div className="characterPanel">
             <h2>
-              {user?.firstName
-                ?`${user.firstName} ${user.lastName || ''}`
-                : "Adventurer"}
+                {user?.firstName
+                  ? `${user.firstName} ${user.lastName || ''}`
+                  : user?.fullName
+                    ? user.fullName
+                    : "Adventurer"}
             </h2>
+            
             <p>Level {level}</p>
 
             <div className="xpBar">
