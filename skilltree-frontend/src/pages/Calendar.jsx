@@ -126,49 +126,49 @@ export default function Calendar() {
 
             {plans
               .filter(p => p.date === selectedDate)
-              .map((p) => (
+              .map((p) => {
                 const realIndex = plans.indexOf(p);
 
                 return(
-                <div key={realIndex} className="planLog">
-                  {p.type === 'health' && (
-                    <>
-                      🍎 Health Log<br />
-                      {p.meal && <>🍴 {p.meal}<br /></>}
-                      {p.water && <>💧 {p.water} oz<br /></>}
-                      {p.calories && <>⚡ {p.calories} cal<br /></>}
-                      {p.vitamins && <>💊 Vitamins taken</>}
-                    </>
-                  )}
+                  <div key={realIndex} className="planLog">
+                    {p.type === 'health' && (
+                      <>
+                        🍎 Health Log<br />
+                        {p.meal && <>🍴 {p.meal}<br /></>}
+                        {p.water && <>💧 {p.water} oz<br /></>}
+                        {p.calories && <>⚡ {p.calories} cal<br /></>}
+                        {p.vitamins && <>💊 Vitamins taken</>}
+                      </>
+                    )}
                   
-                  {p.type === 'intelligence' && (
-                    <>
-                      🧠 {p.studyMaterial || "Study"}<br />
-                      ⏱ {p.studyHours} hrs
-                    </>
-                  )}
+                    {p.type === 'intelligence' && (
+                      <>
+                        🧠 {p.studyMaterial || "Study"}<br />
+                        ⏱ {p.studyHours} hrs
+                      </>
+                    )}
 
-                  {p.type === 'strength' && (
-                    <>
-                      💪 {p.workout || "Workout"}<br />
-                      ⏱ {p.activityMinutes} mins
-                    </>
-                      
-                  )}
+                    {p.type === 'strength' && (
+                      <>
+                        💪 {p.workout || "Workout"}<br />
+                        ⏱ {p.activityMinutes} mins
+                      </>
+                    )}
 
-                  {!p.type && (
-                    <>
-                      <strong>{p.friend}</strong> — {p.activity}<br />
-                      🕒 {p.startTime} - {p.endTime}
-                    </>
-                  )}
+                    {!p.type && (
+                      <>
+                        <strong>{p.friend}</strong> — {p.activity}<br />
+                        🕒 {p.startTime} - {p.endTime}
+                      </>
+                    )}
 
-                  <div style={{ marginTop: '8px' }}>
-                    <button onClick={() => deletePlan(i)}>❌</button>
-                    <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
+                    <div style={{ marginTop: '8px' }}>
+                      <button onClick={() => deletePlan(realIndex)}>❌</button>
+                      <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
 
         </div>
