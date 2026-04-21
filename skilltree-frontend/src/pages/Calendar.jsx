@@ -137,7 +137,11 @@ export default function Calendar() {
                   )}
 
                   {p.type === 'strength' && (
-                    <>💪 Worked out {p.activityMinutes} mins</>
+                    <>
+                      💪 {p.workout || "Workout"}<br />
+                      ⏱ {p.activityMinutes} mins
+                    </>
+                      
                   )}
 
                   {!p.type && (
