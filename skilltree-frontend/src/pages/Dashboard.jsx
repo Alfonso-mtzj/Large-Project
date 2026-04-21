@@ -12,6 +12,7 @@ export default function Dashboard() {
   //intelligence
   const [studyHours, setStudyHours] = useState('');
   const [studyMinutes, setStudyMinutes] = useState('');
+  const [studyMaterial, setStudyMaterial] = useState('');
 
   //Strength
   const [activityMinutes, setActivityMinutes] = useState('');
@@ -124,6 +125,12 @@ export default function Dashboard() {
             <div className="card">
               <h3>🧠 Intelligence</h3>
               <input
+                type="text"
+                placeholder="Study Material"
+                value={studyMaterial}
+                onChange={(e) => setStudyMaterial(e.target.value)}
+              />
+              <input
                 type="number"
                 placeholder="Hours"
                 value={studyHours}
@@ -145,10 +152,12 @@ export default function Dashboard() {
                   ...plans,
                   {
                     date: today,
+                    studyMaterial,
                     studyHours: totalHours,
                     type: 'intelligence'
                   }
                 ]);
+                setStudyMaterial('');
                 setStudyHours('');
                 setStudyMinutes('');
               }}>
