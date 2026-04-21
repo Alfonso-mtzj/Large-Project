@@ -116,7 +116,7 @@ export default function Dashboard() {
             </div>
 
             <p className="characterDate">
-              {new Date().toLocaleDateString()}
+              {new Date().toLocaleDateString()} • {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
             </p>
           </div>
 
