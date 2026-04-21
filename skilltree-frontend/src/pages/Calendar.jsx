@@ -9,6 +9,12 @@ export default function Calendar() {
   const [plans, setPlans] = useState([]);
   const { logout } = useAuth();
   const today = new Date().toISOString().split('T')[0];
+  
+  const deletePlan = (index) => {
+    const updated = plans.filter((_, i) => i !== index);
+    setPlans(updated);
+    localStorage.setItem('plans', JSON.stringify(updated));
+  };
 
   useEffect(() => {
     const savedPlans = localStorage.getItem('plans');
