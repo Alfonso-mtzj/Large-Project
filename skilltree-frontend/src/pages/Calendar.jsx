@@ -125,15 +125,18 @@ export default function Calendar() {
                   {p.type === 'health' && (
                     <>
                       🍎 Health Log<br />
-                      🍴 {p.meal || "Meal"}<br />
-                      💧 {p.water || 0} oz<br />
-                      ⚡ {p.calories || 0} cal<br />
+                      {p.meal && <>🍴 {p.meal}<br /></>
+                      {p.water && <>💧 {p.water} oz<br /></>
+                      {p.calories && <>⚡ {p.calories} cal<br /></>
                       {p.vitamins && <>💊 Vitamins taken</>}
                     </>
                   )}
                   
                   {p.type === 'intelligence' && (
-                    <>🧠 Studied {p.studyHours} hrs</>
+                    <>
+                      🧠 {p.studyMaterial || "Study"}<br />
+                      ⏱ {p.studyHours} hrs
+                    </>
                   )}
 
                   {p.type === 'strength' && (
