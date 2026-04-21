@@ -99,8 +99,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 7%;
-  gap: 5px;
+  margin: 0 auto;
+  gap: 6px;
 }
 
 .card input::placeholder {
@@ -124,12 +124,12 @@
   margin-top: 17px;
   font-weight: 600;
 
-  color: #eaffea;
+  color: #f0fff4;
 
   text-shadow:
-    0 0 6px rgba(120, 255, 160, 0.6),
-    0 0 12px rgba(80, 200, 120, 0.4),
-    0 0 18px rgba(80, 160, 100, 0.3);
+    0 0 8px rgba(120, 255, 160, 0.8),
+    0 0 16px rgba(100, 220, 140, 0.7),
+    0 0 28px rgba(80, 180, 120, 0.6);
 }
 
 .characterPanel {
