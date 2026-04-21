@@ -126,8 +126,11 @@ export default function Calendar() {
 
             {plans
               .filter(p => p.date === selectedDate)
-              .map((p, i) => (
-                <div key={i} className="planLog">
+              .map((p) => (
+                const realIndex = plans.indexOf(p);
+
+                return(
+                <div key={realIndex} className="planLog">
                   {p.type === 'health' && (
                     <>
                       🍎 Health Log<br />
@@ -137,10 +140,6 @@ export default function Calendar() {
                       {p.vitamins && <>💊 Vitamins taken</>}
                     </>
                   )}
-                  <div style={{ marginTop: '8px' }}>
-                    <button onClick={() => deletePlan(i)}>❌</button>
-                    <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
-                  </div>
                   
                   {p.type === 'intelligence' && (
                     <>
@@ -163,6 +162,11 @@ export default function Calendar() {
                       🕒 {p.startTime} - {p.endTime}
                     </>
                   )}
+
+                  <div style={{ marginTop: '8px' }}>
+                    <button onClick={() => deletePlan(i)}>❌</button>
+                    <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
+                  </div>
                 </div>
               ))}
           </div>
