@@ -124,12 +124,11 @@
   margin-top: 17px;
   font-weight: 600;
 
-  color: #f0fff4;
+  color: #d8f5d8;
 
   text-shadow:
-    0 0 8px rgba(120, 255, 160, 0.8),
-    0 0 16px rgba(100, 220, 140, 0.7),
-    0 0 28px rgba(80, 180, 120, 0.6);
+    0 0 4px rgba(120, 255, 160, 0.4),
+    0 0 8px rgba(100, 220, 140, 0.3);
 }
 
 .characterPanel {
