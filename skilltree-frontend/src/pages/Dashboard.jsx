@@ -82,6 +82,34 @@ export default function Dashboard() {
     localStorage.setItem('xp', xp);
     localStorage.setItem('level', level);
   }, [xp, level]);
+
+
+  useEffect(() => {
+    const container = document.querySelector('.dashboardBg') || document.querySelector('.calendarBg');
+    if (!container) return;
+
+    const flies = [];
+
+    for (let i = 0; i < 25; i++) {
+      const ff = document.createElement('div');
+      ff.className = 'firefly';
+
+      ff.style.left = Math.random() * 95 + '%';
+      ff.style.top  = Math.random() * 90 + '%';
+
+      ff.style.setProperty('--dx1', (Math.random()*120-60) + 'px');
+      ff.style.setProperty('--dy1', (Math.random()*80-40)  + 'px');
+      ff.style.setProperty('--dx2', (Math.random()*160-80) + 'px');
+      ff.style.setProperty('--dy2', (Math.random()*120-60) + 'px');
+
+      ff.style.animationDuration = `${Math.random()*6+4}s, ${Math.random()*2+1.5}s`;
+
+      container.appendChild(ff);
+      flies.push(ff);
+    }
+
+    return () => flies.forEach(f => f.remove());
+  }, []);
                                         
 
   return (
