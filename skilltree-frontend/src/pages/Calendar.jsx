@@ -137,6 +137,10 @@ export default function Calendar() {
                       {p.vitamins && <>💊 Vitamins taken</>}
                     </>
                   )}
+                  <div style={{ marginTop: '8px' }}>
+                    <button onClick={() => deletePlan(i)}>❌</button>
+                    <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
+                  </div>
                   
                   {p.type === 'intelligence' && (
                     <>
