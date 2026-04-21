@@ -125,9 +125,9 @@ export default function Calendar() {
                   {p.type === 'health' && (
                     <>
                       🍎 Health Log<br />
-                      {p.meal && <>🍴 {p.meal}<br /></>
-                      {p.water && <>💧 {p.water} oz<br /></>
-                      {p.calories && <>⚡ {p.calories} cal<br /></>
+                      {p.meal && <>🍴 {p.meal}<br /></>}
+                      {p.water && <>💧 {p.water} oz<br /></>}
+                      {p.calories && <>⚡ {p.calories} cal<br /></>}
                       {p.vitamins && <>💊 Vitamins taken</>}
                     </>
                   )}
