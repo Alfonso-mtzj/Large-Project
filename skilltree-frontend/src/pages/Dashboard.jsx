@@ -143,7 +143,7 @@ export default function Dashboard() {
                 onChange={(e) => setStudyMinutes(e.target.value)}
               />
               <button onClick={() => {
-                const totalHours = Number(studyHours) + (Number(studyMinutes) / 60);
+                const totalHours = Math.round((Number(studyHours) + (Number(studyMinutes) / 60)) * 10) / 10;
                 if (!totalHours) return;
 
                 gainXp(totalHours * 12);
