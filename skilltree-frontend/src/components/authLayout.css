@@ -448,7 +448,10 @@ html, body, #root {
    top: 92%;
    left: 50%;
    transform: translateX(-50%);
-   background: rgba(0, 0, 0, 0.7);
+   background: rgba(60, 35, 15, 0.85);
+   box-shadow: 
+      0 0 15px rgba(255, 200, 120, 0.3),
+      inset 0 0 8px rgba(255, 200, 120, 0.2);
    padding: 10px;
    border-radius: 10px;
    font-size: 12px;
