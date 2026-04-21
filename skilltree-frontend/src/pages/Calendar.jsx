@@ -160,9 +160,9 @@ export default function Calendar() {
                       </>
                     )}
 
-                    <div style={{ marginTop: '8px' }}>
-                      <button onClick={() => deletePlan(i)}>❌</button>
-                      <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
+                    <div className="planActions">
+                      <button onClick={() => deletePlan(i)}>✕</button>
+                      <button onClick={() => handelEdit(i)}>✎</button>
                     </div>
                   </div>
                 );
