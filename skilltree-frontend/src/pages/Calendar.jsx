@@ -126,11 +126,9 @@ export default function Calendar() {
 
             {plans
               .filter(p => p.date === selectedDate)
-              .map((p) => {
-                const realIndex = plans.indexOf(p);
-
+              .map((p, i) => {
                 return(
-                  <div key={realIndex} className="planLog">
+                  <div key={i} className="planLog">
                     {p.type === 'health' && (
                       <>
                         🍎 Health Log<br />
@@ -163,7 +161,7 @@ export default function Calendar() {
                     )}
 
                     <div style={{ marginTop: '8px' }}>
-                      <button onClick={() => deletePlan(realIndex)}>❌</button>
+                      <button onClick={() => deletePlan(i)}>❌</button>
                       <button onClick={() => alert("Edit coming next 👀")}>✏️</button>
                     </div>
                   </div>
