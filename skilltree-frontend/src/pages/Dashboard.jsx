@@ -357,13 +357,10 @@ export default function Dashboard() {
                 const start = new Date(`${date}T${startTime}`);
                 const end = new Date(`${date}T${endTime}`);
 
-                const durationMs = end - start;
-
-                if(durationMs <= 0) {
-                  alert("End time must be after start time");
-                  return;
+                if(end <= start) {
+                  end.setDate(end.getDate() + 1);
                 }
-      
+                const durationMs = end - start;
                 const durationHours = durationMs / (1000 * 60 * 60);
                 const xpEarned = Math.round(durationHours * 15);
 
