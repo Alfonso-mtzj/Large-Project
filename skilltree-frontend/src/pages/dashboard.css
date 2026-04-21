@@ -107,13 +107,12 @@
 
 .characterDate {
   margin-top: 20px;
-  color: #e8f5e9;
-  background: linear-gradient(145deg, #6fa87a, #4f7c5a);
+  color: linear-gradient(145deg, #6fa87a, #4f7c5a);
 }
 
 .characterPanel {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-family: 'Cinzel', serif;
 
   padding: 20px;
