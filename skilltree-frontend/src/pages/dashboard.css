@@ -38,7 +38,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  text-align: left;
 
   min-height: 220px;
 
@@ -64,7 +63,7 @@
 .card input,
 .card select {
   width: 80%;
-  margin-left: 10%;
+  margin-left: 7%;
 
   background: #5c3a1a;
   color: #f5e8b0;
