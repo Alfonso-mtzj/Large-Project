@@ -903,6 +903,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void _editPlans(String dk, DateTime day) {
+    final friendCtrl    = TextEditingController();
     final activityCtrl  = TextEditingController();
     String? selFriend   = widget.friends.isNotEmpty ? widget.friends.first['name'] as String : null;
     TimeOfDay? startT;
