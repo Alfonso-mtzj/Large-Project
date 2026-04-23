@@ -17,9 +17,12 @@ export default function Calendar() {
   const today = `${todayLocal.getFullYear()}-${String(todayLocal.getMonth() + 1).padStart(2,'0')}-${String(todayLocal.getDate()).padStart(2,'0')}`;
 
   // ── INLINE EDIT STATE ─────────────────────────────────────────────
-  // Tracks which plan is being edited and what the user has typed so far
+  // Tracks which plan is being edited and what the user has typed so far.
+  // editingStart/End only used for planner entries that have times.
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingValue, setEditingValue] = useState('');
+  const [editingStart, setEditingStart] = useState('');
+  const [editingEnd,   setEditingEnd]   = useState('');
 
   // ── CALENDAR NAVIGATION STATE ─────────────────────────────────────
   const [selectedDate, setSelectedDate] = useState('');
@@ -112,6 +115,9 @@ export default function Calendar() {
   // ── DELETE A PLAN ─────────────────────────────────────────────────
   // Filters out the plan at the given index and saves the result
   const deletePlan = (globalIndex) => {
+    // ONE alert box — required by rubric for delete confirmation
+    if (!window.confirm('Are you sure you want to delete this entry?')) return;
+
     const updated = plans.filter((_, i) => i !== globalIndex);
     setPlans(updated);
     localStorage.setItem('plans', JSON.stringify(updated));
@@ -132,7 +138,13 @@ export default function Calendar() {
     if (p.type === 'intelligence') currentValue = p.studyMaterial || '';
     else if (p.type === 'strength') currentValue = p.workout || '';
     else if (p.type === 'health')   currentValue = p.meal || '';
-    else                            currentValue = p.activity || ''; // planner entry
+    else {
+      // Planner entry (type === 'planner' or legacy !type)
+      // Pre-fill all three fields: activity text + both times
+      currentValue = p.activity || '';
+      setEditingStart(p.startTime || '');
+      setEditingEnd(p.endTime || '');
+    }
 
     setEditingIndex(globalIndex);
     setEditingValue(currentValue);
@@ -149,12 +161,20 @@ export default function Calendar() {
     if (p.type === 'intelligence') updated[globalIndex].studyMaterial = editingValue;
     else if (p.type === 'strength') updated[globalIndex].workout      = editingValue;
     else if (p.type === 'health')   updated[globalIndex].meal         = editingValue;
-    else                            updated[globalIndex].activity      = editingValue;
+    else {
+      // Planner entry — save activity text AND updated times
+      updated[globalIndex].activity  = editingValue;
+      updated[globalIndex].startTime = editingStart;
+      updated[globalIndex].endTime   = editingEnd;
+      updated[globalIndex].type      = 'planner'; // ensure type is set on save
+    }
 
     setPlans(updated);
     localStorage.setItem('plans', JSON.stringify(updated));
     setEditingIndex(null);
     setEditingValue('');
+    setEditingStart('');
+    setEditingEnd('');
   };
 
   // ── BUILD CALENDAR GRID ───────────────────────────────────────────
@@ -199,6 +219,21 @@ export default function Calendar() {
   const formatDateDisplay = (dateStr) => {
     const [year, month, day] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day).toLocaleDateString();
+  };
+
+  // ── CONVERT 24HR TIME STRING TO 12HR STANDARD TIME ───────────────
+  // Input:  "14:30"  →  Output: "2:30 PM"
+  // Input:  "09:05"  →  Output: "9:05 AM"
+  // Input:  "00:00"  →  Output: "12:00 AM"
+  const formatTime = (timeStr) => {
+    if (!timeStr) return '';
+    const [hourStr, minuteStr] = timeStr.split(':');
+    let hour = parseInt(hourStr, 10);
+    const minute = minuteStr || '00';
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12;
+    if (hour === 0) hour = 12; // midnight and noon edge cases
+    return `${hour}:${minute} ${ampm}`;
   };
 
   const days = getDaysInMonth(currentDate);
@@ -344,18 +379,51 @@ export default function Calendar() {
                   )}
 
                   {/* ── PLANNER / FRIEND LOG ── */}
-                  {!p.type && (
+                  {/* Matches new plans (type:'planner') and old localStorage plans (!type) */}
+                  {(p.type === 'planner' || (!p.type && p.friend !== undefined)) && (
                     <>
-                      {editingIndex === globalIndex
-                        ? <input
+                      {editingIndex === globalIndex ? (
+                        // When editing: show text input for activity AND time pickers
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+
+                          {/* Activity name input */}
+                          <input
                             autoFocus
                             value={editingValue}
                             onChange={(e) => setEditingValue(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && saveEdit(globalIndex)}
+                            placeholder="Activity"
                           />
-                        : <><strong>{p.friend}</strong> — {p.activity}<br /></>
-                      }
-                      🕒 {p.startTime} - {p.endTime}
+
+                          {/* Start time */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
+                            <span style={{ opacity: 0.6 }}>Start:</span>
+                            <input
+                              type="time"
+                              value={editingStart}
+                              onChange={(e) => setEditingStart(e.target.value)}
+                              style={{ flex: 1 }}
+                            />
+                          </div>
+
+                          {/* End time */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
+                            <span style={{ opacity: 0.6 }}>End:</span>
+                            <input
+                              type="time"
+                              value={editingEnd}
+                              onChange={(e) => setEditingEnd(e.target.value)}
+                              style={{ flex: 1 }}
+                            />
+                          </div>
+
+                        </div>
+                      ) : (
+                        // Normal display: show friend, activity, and formatted time
+                        <>
+                          <strong>{p.friend}</strong> — {p.activity}<br />
+                          🕒 {formatTime(p.startTime)} - {formatTime(p.endTime)}
+                        </>
+                      )}
                     </>
                   )}
 
