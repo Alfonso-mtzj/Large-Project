@@ -10,23 +10,23 @@ export default function Dashboard() {
   const navigate = useNavigate();
   console.log("USER IN DASHBOARD:", user);
 
-  // ── INTELLIGENCE STATE ───────────────────────────────────────────
+  //intelligence
   const [studyHours, setStudyHours] = useState('');
   const [studyMinutes, setStudyMinutes] = useState('');
   const [studyMaterial, setStudyMaterial] = useState('');
 
-  // ── STRENGTH STATE ───────────────────────────────────────────────
+  //Strength
   const [activityMinutes, setActivityMinutes] = useState('');
   const [workout, setWorkout] = useState('');
 
-  // ── HEALTH STATE ─────────────────────────────────────────────────
+  //health
   const [meal, setMeal] = useState('');
   const [showCalories, setShowCalories] = useState(false);
   const [calories, setCalories] = useState('');
   const [water, setWater] = useState('');
   const [vitamins, setVitamins] = useState(false);
 
-  // ── RELATIONSHIPS / PLANNER STATE ────────────────────────────────
+  //relationships
   const [newFriend, setNewFriend] = useState('');
   const [selectedFriend, setSelectedFriend] = useState('');
   const [activity, setActivity] = useState('');
@@ -38,19 +38,12 @@ export default function Dashboard() {
   const [plans, setPlans] = useState([]);
   const today = new Date().toISOString().split('T')[0];
 
-  // ── XP / LEVEL STATE ─────────────────────────────────────────────
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
-
-  // ── LIVE CLOCK STATE ─────────────────────────────────────────────
-  // Stores the current time so the clock re-renders every second
-  const [now, setNow] = useState(new Date());
 
   const maxXp = 100;
   const xpPercent = (xp / maxXp) * 100;
 
-  // ── GAIN XP HELPER ───────────────────────────────────────────────
-  // Adds XP and levels up automatically when the bar fills
   const gainXp = (amount) => {
     let newXp = xp + amount;
 
@@ -62,7 +55,6 @@ export default function Dashboard() {
     setXp(newXp);
   };
 
-  // ── LOAD FRIENDS & PLANS FROM LOCALSTORAGE ON MOUNT ──────────────
   useEffect(() => {
     const savedFriends = localStorage.getItem('friends');
     const savedPlans = localStorage.getItem('plans');
@@ -71,43 +63,28 @@ export default function Dashboard() {
     if (savedPlans) setPlans(JSON.parse(savedPlans));
   }, []);
 
-  // ── SAVE FRIENDS TO LOCALSTORAGE WHENEVER THEY CHANGE ────────────
   useEffect(() => {
     localStorage.setItem('friends', JSON.stringify(friends));
   }, [friends]);
 
-  // ── SAVE PLANS TO LOCALSTORAGE WHENEVER THEY CHANGE ──────────────
   useEffect(() => {
     localStorage.setItem('plans', JSON.stringify(plans));
   }, [plans]);
 
-  // ── LOAD XP & LEVEL FROM LOCALSTORAGE ON MOUNT ───────────────────
   useEffect(() => {
     const savedXp = localStorage.getItem('xp');
     const savedLevel = localStorage.getItem('level');
 
-    if (savedXp) setXp(Number(savedXp));
-    if (savedLevel) setLevel(Number(savedLevel));
+    if(savedXp) setXp(Number(savedXp));
+    if(savedLevel) setLevel(Number(savedLevel));
   }, []);
 
-  // ── SAVE XP & LEVEL TO LOCALSTORAGE WHENEVER THEY CHANGE ─────────
   useEffect(() => {
     localStorage.setItem('xp', xp);
     localStorage.setItem('level', level);
   }, [xp, level]);
 
-  // ── LIVE CLOCK — ticks every second ──────────────────────────────
-  // setInterval updates `now` every 1000ms so the time stays current.
-  // The cleanup function (clearInterval) stops the timer when the
-  // component unmounts, preventing memory leaks.
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-  // ── FIREFLY ANIMATION ─────────────────────────────────────────────
-  // Creates floating firefly elements and appends them to the background.
-  // Cleaned up automatically when the component unmounts.
   useEffect(() => {
     const container = document.querySelector('.dashboardBg') || document.querySelector('.calendarBg');
     if (!container) return;
@@ -134,49 +111,46 @@ export default function Dashboard() {
 
     return () => flies.forEach(f => f.remove());
   }, []);
+                                        
 
   return (
     <>
+
       <div className="dashboardBg" style={{ backgroundImage: `url(${bg})` }}>
+
         <div className="dashboardFrame">
+        {/* NAV */}
+        <div className="navBar">
+          <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
+          <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
+          <button className="navButton" onClick={() => {
+            logout();
+            navigate('/login');
+          }}>
+            🚪 Logout
+          </button>
+        </div>
 
-          {/* ── NAVIGATION BAR ── */}
-          <div className="navBar">
-            <button className="navButton" onClick={() => navigate('/dashboard')}>🧙 Home</button>
-            <button className="navButton" onClick={() => navigate('/calendar')}>📅 Calendar</button>
-            <button className="navButton" onClick={() => {
-              logout();
-              navigate('/login');
-            }}>
-              🚪 Logout
-            </button>
-          </div>
-
-          {/* ── CHARACTER PANEL ── shows name, level, XP bar, and live clock */}
           <div className="characterPanel">
             <h2>
               {user === null
                 ? "Loading..."
                 : `${user.firstName || ''} ${user.lastName || ''}`.trim() || "Adventurer"}
             </h2>
-
+            
             <p>Level {level}</p>
 
-            {/* XP progress bar */}
             <div className="xpBar">
               <div className="xpFill" style={{ width: `${xpPercent}%` }} />
             </div>
 
-            {/* Live clock — uses `now` state which updates every second */}
             <p className="characterDate">
-              {now.toLocaleDateString()} • {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {new Date().toLocaleDateString()} • {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
             </p>
           </div>
 
-          {/* ── STATS PANEL ── contains all activity logging cards */}
           <div className="statsPanel">
 
-            {/* ── INTELLIGENCE CARD ── logs study sessions */}
             <div className="card">
               <h3>🧠 Intelligence</h3>
               <input
@@ -198,7 +172,6 @@ export default function Dashboard() {
                 onChange={(e) => setStudyMinutes(e.target.value)}
               />
               <button onClick={() => {
-                // Convert hours + minutes into a single decimal hour value
                 const totalHours = Math.round((Number(studyHours) + (Number(studyMinutes) / 60)) * 10) / 10;
                 if (!totalHours) return;
 
@@ -221,7 +194,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* ── STRENGTH CARD ── logs workouts */}
             <div className="card">
               <h3>💪 Strength</h3>
               <input
@@ -238,10 +210,9 @@ export default function Dashboard() {
               />
               <button onClick={() => {
                 const mins = Number(activityMinutes);
-                if (!mins) return;
+                if(!mins) return;
 
-                // 1 XP per 5 minutes of exercise
-                gainXp(Math.round(mins / 5));
+                gainXp(Math.round(mins/5)); //1 xp per min
 
                 setPlans([
                   ...plans,
@@ -252,7 +223,7 @@ export default function Dashboard() {
                     type: 'strength'
                   }
                 ]);
-
+      
                 setActivityMinutes('');
                 setWorkout('');
               }}>
@@ -260,7 +231,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* ── HEALTH CARD ── logs meals, water, and vitamins */}
             <div className="card">
               <h3>🍎 Health</h3>
 
@@ -280,23 +250,22 @@ export default function Dashboard() {
                 Add calories?
               </label>
 
-              {/* Conditionally show calorie input */}
               {showCalories && (
                 <input
                   type="number"
                   placeholder="Calories"
                   value={calories}
                   onChange={(e) => setCalories(e.target.value)}
-                />
+                 />
               )}
-
+      
               <input
                 type="number"
                 placeholder="Water (oz)"
                 value={water}
                 onChange={(e) => setWater(e.target.value)}
-              />
-
+               />
+          
               <label>
                 <input
                   type="checkbox"
@@ -305,16 +274,18 @@ export default function Dashboard() {
                 />
                 Took Vitamins
               </label>
+                
 
               <button onClick={() => {
                 let healthXp = 0;
+
                 const cal = Number(calories);
 
-                // XP calculated from calories, water intake, and vitamins
-                if (cal) healthXp += Math.round(cal / 10);
-                if (water) healthXp += Math.round(water / 8);
-                if (vitamins) healthXp += 5;
+                if(cal) healthXp += Math.round(cal / 10);
+                if(water) healthXp += Math.round(water / 8);
+                if(vitamins) healthXp += 5;
 
+                //adding it as a plan
                 const today = new Date().toISOString().split('T')[0];
 
                 setPlans([
@@ -328,7 +299,7 @@ export default function Dashboard() {
                     type: 'health'
                   }
                 ]);
-
+      
                 gainXp(healthXp);
                 setMeal('');
                 setCalories('');
@@ -340,7 +311,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* ── ADD FRIEND CARD ── adds a friend to the relationships list */}
             <div className="card">
               <h3>👥 Add Friend</h3>
 
@@ -354,10 +324,9 @@ export default function Dashboard() {
               <button onClick={() => {
                 if (!newFriend.trim()) return;
 
-                // Capitalize first letter, lowercase the rest
                 const formattedName =
                   newFriend.charAt(0).toUpperCase() + newFriend.slice(1).toLowerCase();
-
+      
                 setFriends([...friends, { name: formattedName, xp: 0, level: 1 }]);
                 setNewFriend('');
               }}>
@@ -365,7 +334,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* ── PLANNER CARD ── schedules an activity with a friend */}
             <div className="card">
               <h3>📆 Planner</h3>
 
@@ -390,11 +358,9 @@ export default function Dashboard() {
                 const start = new Date(`${date}T${startTime}`);
                 const end = new Date(`${date}T${endTime}`);
 
-                // If end time is before start, assume it wraps to the next day
-                if (end <= start) {
+                if(end <= start) {
                   end.setDate(end.getDate() + 1);
                 }
-
                 const durationMs = end - start;
                 const durationHours = durationMs / (1000 * 60 * 60);
                 const xpEarned = Math.round(durationHours * 15);
@@ -404,29 +370,31 @@ export default function Dashboard() {
                 setPlans([
                   ...plans,
                   {
+                    type: 'planner',   // explicit type so Calendar can identify it
                     friend: selectedFriend,
                     activity,
                     date,
                     startTime,
-                    endTime,
-                    studyHours,
-                    activityMinutes,
-                    calories
+                    endTime
                   }
                 ]);
 
-                // Also give the friend XP for the planned activity
                 setFriends(prev =>
                   prev.map(f => {
                     if (f.name === selectedFriend) {
-                      const newXp = f.xp + Math.round(durationHours * 10);
-                      const newLevel = Math.floor(newXp / 100) + 1;
+                      // Correctly carry XP over multiple level-ups
+                      // e.g. if friend is at 90xp and earns 25, they level up
+                      // and have 15xp remaining, not a broken negative/wrong value
+                      let earned = Math.round(durationHours * 10);
+                      let newXp  = f.xp + earned;
+                      let newLevel = f.level;
 
-                      return {
-                        ...f,
-                        xp: newXp % 100,
-                        level: newLevel
-                      };
+                      while (newXp >= 100) {
+                        newXp -= 100;
+                        newLevel += 1;
+                      }
+
+                      return { ...f, xp: newXp, level: newLevel };
                     }
                     return f;
                   })
@@ -442,14 +410,95 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* ── RELATIONSHIPS CARD ── displays all friends and their levels */}
             <div className="card">
               <h3>💕 Relationships</h3>
-              {friends.map((f, i) => (
-                <div key={i}>
-                  {f.name} - Level {f.level} ({f.xp} XP)
-                </div>
-              ))}
+
+              {friends.length === 0 && (
+                <p style={{ opacity: 0.5, fontStyle: 'italic', fontSize: '0.9rem' }}>
+                  No friends added yet.
+                </p>
+              )}
+
+              {friends.map((f, i) => {
+                // Each friend has their own XP bar capped at 100
+                const friendMaxXp = 100;
+                const friendXpPercent = Math.min((f.xp / friendMaxXp) * 100, 100);
+
+                return (
+                  <div key={i} style={{
+                    marginBottom: '14px',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.08)'
+                  }}>
+
+                    {/* Friend name + delete button on same row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                      <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
+                        {f.name}
+                      </span>
+
+                      {/* ⚔️ Delete friend button */}
+                      {/* Small X icon button — unobtrusive but clearly a remove action */}
+                      <button
+                        title={`Remove ${f.name}`}
+                        onClick={() => {
+                          // Remove the friend AND all plans associated with them
+                          // so the calendar doesn't show orphaned entries
+                          const updatedFriends = friends.filter((_, idx) => idx !== i);
+                          setFriends(updatedFriends);
+
+                          const updatedPlans = plans.filter(p => p.friend !== f.name);
+                          setPlans(updatedPlans);
+                          localStorage.setItem('plans', JSON.stringify(updatedPlans));
+                        }}
+                        style={{
+                          background: 'rgba(139,17,17,0.5)',
+                          color: '#ffaaaa',
+                          border: '1px solid rgba(255,100,100,0.25)',
+                          borderRadius: '50%',
+                          width: '22px',
+                          height: '22px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.7rem',
+                          cursor: 'pointer',
+                          lineHeight: 1,
+                          padding: 0,
+                          flexShrink: 0
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {/* Level and XP text */}
+                    <div style={{ fontSize: '0.82rem', opacity: 0.7, marginBottom: '6px' }}>
+                      Level {f.level} &nbsp;•&nbsp; {f.xp} / {friendMaxXp} XP
+                    </div>
+
+                    {/* XP bar for this friend */}
+                    <div style={{
+                      width: '100%',
+                      height: '8px',
+                      background: 'rgba(255,255,255,0.1)',
+                      borderRadius: '4px',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        width: `${friendXpPercent}%`,
+                        height: '100%',
+                        background: 'linear-gradient(90deg, #b45309, #f59e0b)',
+                        borderRadius: '4px',
+                        transition: 'width 0.4s ease'
+                      }} />
+                    </div>
+
+                  </div>
+                );
+              })}
             </div>
 
           </div>
